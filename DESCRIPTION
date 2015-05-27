@@ -1,0 +1,16 @@
+Package: overlap.grpreg
+Type: Package
+Title: Penalized Regression Models with Overlapping Grouped Covariates 
+Version: 1.0
+Date: 2015-05-24
+Author: Yaohui Zeng
+Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
+Depends: R (>= 2.13.0), Matrix, grpreg
+LazyData: true
+Description: Fit the regularization path of linear, logistic or poisson
+  models with overlapping grouped covariates based on the latent group lasso
+  approach (Jacob 2005). Latent group MCP/SCAD as well as bi-level selection
+  methods such as the group exponential lasso, the composite MCP were also 
+  implemented.
+License: GPL-2
+Suggests: testthat
