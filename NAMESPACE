@@ -1,4 +1,4 @@
-export(incidenceMatrix, overlap.grpreg, cv.overlap.grpreg, select)
+export(overlapMatrix, overlap.grpreg, cv.overlap.grpreg, select)
 S3method(summary, cv.overlap.grpreg)
 S3method(print, summary.cv.overlap.grpreg)
 S3method(select, overlap.grpreg)
