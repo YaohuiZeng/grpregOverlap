@@ -27,6 +27,7 @@ incidenceMatrix <- function(X, group) {
   if (is.null(names(group))) {
     names(group) <- paste("grp", 1:J, sep="")
   }
+  
   if (class(group[[1]]) == 'numeric') {
     for (i in 1:J) {
       ind <- group[[i]]
@@ -47,19 +48,23 @@ incidenceMatrix <- function(X, group) {
     stop("The names of variables in X don't match with names in group!")
   }
   
-  ## handle cases where variables not belong to any of groups in 'group'
+  ## TODO:
+  ## (1) handle cases where variables not belong to any of groups in 'group'
   ## put each variable into a separate group, stack those group at right
-  # first remove possible zero columns
+  ## (2) provide option of removing groups including only one variable.
+  ## Will add this later...
+  
   grp.mat <- grp.mat[, colSums(grp.mat) != 0]
-  if (ncol(grp.mat) < p) { 
-    # there exist variables that don't belong to 'group'. 
-    # create a bottom-right corner identity matrix.
-    colnames.new <- c(colnames(grp.mat), setdiff(colnames(X), colnames(grp.mat)))
-    rownames.new <- c(rownames(grp.mat), 
-                      paste("grp", (J+1):(J+p-ncol(grp.mat)), sep=""))
-    grp.mat <- bdiag(grp.mat, Diagonal(p-ncol(grp.mat)))
-    dimnames(grp.mat) <- list(rownames.new, colnames.new)
-  }
+#   if (ncol(grp.mat) < p) { 
+#     # there exist variables that don't belong to 'group'. 
+#     # create a bottom-right corner identity matrix.
+#     colnames.new <- c(colnames(grp.mat), setdiff(colnames(X), colnames(grp.mat)))
+#     rownames.new <- c(rownames(grp.mat), 
+#                       paste("grp", (J+1):(J+p-ncol(grp.mat)), sep=""))
+#     grp.mat <- bdiag(grp.mat, Diagonal(p-ncol(grp.mat)))
+#     dimnames(grp.mat) <- list(rownames.new, colnames.new)
+#   }
+
   grp.mat
 }
 # ------------------------------------------------------------------------------
