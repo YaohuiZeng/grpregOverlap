@@ -28,11 +28,13 @@ overlap.grpreg <- function(X, y, group,
   diag(over.temp) <- 0
   if (all(over.temp == 0)) {
     cat("Note: There are NO overlaps between groups at all!", "\n") 
-    cat("      Now conducting non-overlapping group selection. 'fit$overlap.mat' will just be a diagonal matrix.")
+    cat("      Now conducting non-overlapping group selection ...")
   }
-  fit <- grpreg(X = X.latent, y = y, group = grp.vec, family=family, 
-                nlambda=nlambda, lambda=lambda, lambda.min=lambda.min, 
-                alpha=alpha, eps=eps, max.iter=max.iter, dfmax=dfmax, 
+  
+  fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
+                family=family, nlambda=nlambda, lambda=lambda, 
+                lambda.min=lambda.min, alpha=alpha, eps=eps, 
+                max.iter=max.iter, dfmax=dfmax, 
                 gmax=gmax, gamma=gamma, tau=tau, 
                 group.multiplier=group.multiplier, warn=warn, ...)
   fit$beta.latent <- fit$beta # fit$beta from grpreg is latent beta
@@ -70,6 +72,7 @@ gamma2beta<- function(gamma, incidence.mat, grp.vec) {
 }
 # -------------------------------------------------------------------------------
 
+
 ## function: expand design matrix X to overlapping design matrix (X.latent)
 # -------------------------------------------------------------------------------
 expandX <- function(X, incidence.mat, grp.vec) {
@@ -84,7 +87,7 @@ expandX <- function(X, incidence.mat, grp.vec) {
   
   ## the following code will automatically remove variables not included in 'group'
   for(i in 1:nrow(incidence.mat)) {
-    X.latent <- cbind(X.latent, X[, incidence.mat[i,]==1])
+    X.latent <- cbind(X.latent, X[, incidence.mat[i,]==1, drop=FALSE])
   }
   colnames(X.latent) <- paste('grp', grp.vec, '_', 
                               colnames(X.latent), sep = "")

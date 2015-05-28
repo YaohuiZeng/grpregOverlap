@@ -54,7 +54,7 @@ incidenceMatrix <- function(X, group) {
   ## (2) provide option of removing groups including only one variable.
   ## Will add this later...
   
-  grp.mat <- grp.mat[, colSums(grp.mat) != 0]
+#   grp.mat <- grp.mat[, colSums(grp.mat) != 0]
 #   if (ncol(grp.mat) < p) { 
 #     # there exist variables that don't belong to 'group'. 
 #     # create a bottom-right corner identity matrix.

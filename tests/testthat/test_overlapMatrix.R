@@ -19,7 +19,6 @@ test_that("group argument, a list?", {
   group <- lapply(group, function(x) colnames(X)[x])
   expect_that(overlapMatrix(X, group), 
               not(throws_error("Argument 'group' must be a list")))
-  
 })
 
 test_that('group information, correct?', {
