@@ -7,7 +7,6 @@ selection methods, namely the group exponential lasso(Breheny, 2015) and the
 composite MCP (Huang et al., 2012) are also available. This package serves as 
 an extension of R package 'grpreg' (by Dr. Patrick Breheny <patrick-breheny@uiowa.edu>) 
 for grouped variable selection involving overlaps between groups.
->>>>>>> c2b134fb4ed1978ab23e151365eaedd2c15a1428
 
 To install:
 * the latest version (requires devtools): install_github("YaohuiZeng/overlap.grpreg")
