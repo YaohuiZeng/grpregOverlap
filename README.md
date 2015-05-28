@@ -12,4 +12,4 @@ To install:
 * the latest version (requires devtools): install_github("YaohuiZeng/overlap.grpreg")
 
 To report bugs：
-* send email to yaohui-zeng@uiowa.edu
+* send email to Yaohui Zeng <yaohui-zeng@uiowa.edu>
