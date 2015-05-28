@@ -10,3 +10,6 @@ for grouped variable selection involving overlaps between groups.
 
 To install:
 * the latest version (requires devtools): install_github("YaohuiZeng/overlap.grpreg")
+
+To report bugs：
+* send email to Yaohui Zeng <yaohui-zeng@uiowa.edu>
