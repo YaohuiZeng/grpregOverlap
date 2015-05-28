@@ -1,5 +1,4 @@
 ## function: overlapping group selection based on R Package 'grpreg' 
-##           by Dr. Patrick Breheny <patrick-breheny@uiowa.edu>
 # ------------------------------------------------------------------------------
 overlap.grpreg <- function(X, y, group, 
                            penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
@@ -7,10 +6,10 @@ overlap.grpreg <- function(X, y, group,
                            family=c("gaussian","binomial", "poisson"), 
                            nlambda=100, lambda, 
                            lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},
-                           alpha=1, eps=.001, max.iter=1000, dfmax=p, gmax=J,
-                           gamma=3, tau=1/3, 
+                           alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
+                           gmax=length(group), gamma=3, tau=1/3, 
                            group.multiplier={if (strtrim(penalty,2)=="gr") 
-                             sqrt(table(group[group!=0])) else rep(1,J)}, 
+                             sqrt(sapply(group, length)) else rep(1, length(group))}, 
                            warn=TRUE, ...) {
   # Error checking
   if (class(X) != "matrix") {
@@ -23,29 +22,32 @@ overlap.grpreg <- function(X, y, group,
 
   incid.mat <- incidenceMatrix(X, group) # group membership incidence matrix
   over.mat <- over.temp <- Matrix(incid.mat %*% t(incid.mat)) # overlap matrix
-  grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector
+  grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector  
+  X.latent <- expandX(X, incid.mat, grp.vec)
   
-  overlap <- TRUE
   diag(over.temp) <- 0
   if (all(over.temp == 0)) {
-    overlap <- FALSE
-    cat("Note: There are NO overlaps among groups at all! Now conducting non-overlapping group selection!")
-    val <- grpreg(X = X, y = y, group = grp.vec, ...)
-  } else {
-    X.latent <- expandX(X, incid.mat, grp.vec)
-    fit <- grpreg(X = X.latent, y = y, group = grp.vec, ...)
-    fit$beta.latent <- fit$beta # fit$beta from grpreg is latent beta
-    fit$beta <- gamma2beta(gamma=fit$beta, incid.mat, grp.vec)
-    fit$incidence.mat <- incid.mat
-    fit$overlap.mat <- over.mat
-    fit$group <- group
-    fit$grp.vec <- grp.vec
-    fit$X.latent <- X.latent
-    # get results, store in new class 'overlap.grpreg'
-    val <- structure(fit,
-                     class = c('overlap.grpreg', 'grpreg'))
-    val
+    cat("Note: There are NO overlaps between groups at all!", "\n") 
+    cat("      Now conducting non-overlapping group selection ...")
   }
+  
+  fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
+                family=family, nlambda=nlambda, lambda=lambda, 
+                lambda.min=lambda.min, alpha=alpha, eps=eps, 
+                max.iter=max.iter, dfmax=dfmax, 
+                gmax=gmax, gamma=gamma, tau=tau, 
+                group.multiplier=group.multiplier, warn=warn, ...)
+  fit$beta.latent <- fit$beta # fit$beta from grpreg is latent beta
+  fit$beta <- gamma2beta(gamma = fit$beta, incid.mat, grp.vec)
+  fit$incidence.mat <- incid.mat
+  fit$group <- group
+  fit$grp.vec <- grp.vec # this is 'group' argument in Package 'grpreg'
+  fit$X.latent <- X.latent
+  fit$overlap.mat <- over.mat
+  # get results, store in new class 'overlap.grpreg', and inherited from 'grpreg'
+  val <- structure(fit,
+                   class = c('overlap.grpreg', 'grpreg'))
+  val
 }
 # -------------------------------------------------------------------------------
 
@@ -70,13 +72,22 @@ gamma2beta<- function(gamma, incidence.mat, grp.vec) {
 }
 # -------------------------------------------------------------------------------
 
+
 ## function: expand design matrix X to overlapping design matrix (X.latent)
 # -------------------------------------------------------------------------------
 expandX <- function(X, incidence.mat, grp.vec) {
   # expand X to X.latent
   X.latent <- NULL
+  
+  ## TODO:
+  ## (1) handle cases where variables not belong to any of groups in 'group'
+  ## put each variable into a separate group, stack those group at right
+  ## (2) provide option of removing groups including only one variable.
+  ## Will add this later...
+  
+  ## the following code will automatically remove variables not included in 'group'
   for(i in 1:nrow(incidence.mat)) {
-    X.latent <- cbind(X.latent, X[, incidence.mat[i,]==1])
+    X.latent <- cbind(X.latent, X[, incidence.mat[i,]==1, drop=FALSE])
   }
   colnames(X.latent) <- paste('grp', grp.vec, '_', 
                               colnames(X.latent), sep = "")
