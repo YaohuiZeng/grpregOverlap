@@ -31,11 +31,12 @@ If set to TRUE, print out the progress of the cross-validation. Default is FALSE
 
 \details{
 This function is built upon \code{\link[grpreg]{cv.grpreg}}. The class can directly call
-\code{plot} function implemented for class \code{cv.grpreg}.
+\code{plot} function implemented for class \code{\link[grpreg]{cv.grpreg}}.
 }
+
 \value{
 An object with S3 class \code{"cv.overlap.grpreg"}, which inherits from class \code{"cv.grpreg"}. 
-The following variables are contained in the class (adopted from Package \code{grpreg}).
+The following variables are contained in the class (adopted from \code{\link[grpreg]{cv.grpreg}}).
   \item{cve}{The error for each value of \code{lambda}, averaged across the cross-validation folds.}
   \item{cvse}{The estimated standard error associated with each value of for \code{cve}.}
   \item{lambda}{The sequence of regularization parameter values along which the cross-validation error was calculated.}
@@ -58,28 +59,28 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}, \code{\link{predict.overlap.grpreg}}, \code{\link[=summary.cv.overlap.grpreg]{summary}}
+\code{\link{overlap.grpreg}}, \code{\link{predict.overlap.grpreg}}, \code{\link[=summary.cv.overlap.grpreg]{summary}}, and \code{\link[grpreg]{cv.grpreg}}.
 }
 
 \examples{
-  ## linear regression, a simulation demo.
-  set.seed(123)
-  group <- list(gr1 = c(1, 2, 3),
-                gr2 = c(1, 4),
-                gr3 = c(2, 4, 5),
-                gr4 = c(3, 5),
-                gr5 = c(6))
-  beta.latent.T <- c(5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 0) # true latent coefficients.
-  # beta.T <- c(2, 3, 7, 0, 5, 0), true variables: 1, 2, 3, 5; true groups: 1, 4.
-  X <- matrix(rnorm(n = 6*100), ncol = 6)
-  X.latent <- expandX(X, group)
-  y <- X.latent \%*\% beta.latent.T + rnorm(100)
-  
-  cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
-  summary(cvfit)
-  plot(cvfit)
-  par(mfrow=c(2,2))
-  plot(cvfit, type="all")
+## linear regression, a simulation demo.
+set.seed(123)
+group <- list(gr1 = c(1, 2, 3),
+              gr2 = c(1, 4),
+              gr3 = c(2, 4, 5),
+              gr4 = c(3, 5),
+              gr5 = c(6))
+beta.latent.T <- c(5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 0) # true latent coefficients.
+# beta.T <- c(2, 3, 7, 0, 5, 0), true variables: 1, 2, 3, 5; true groups: 1, 4.
+X <- matrix(rnorm(n = 6*100), ncol = 6)
+X.latent <- expandX(X, group)
+y <- X.latent \%*\% beta.latent.T + rnorm(100)
+
+cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
+summary(cvfit)
+plot(cvfit)
+par(mfrow=c(2,2))
+plot(cvfit, type="all")
 }
 
 \concept{cross-validation}

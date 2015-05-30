@@ -21,7 +21,7 @@ only 308 pathways with size between 15 and 500 are included. Then 4301 genes in
 those selected pathways are chosen.
 
 A list of three variables included in \code{pathway.dat}:
-  \describe{
+  \itemize{
     \item{\code{expression}}{
     a 50-by-4301 matrix that records the gene expression data. Used as design 
     matrix.

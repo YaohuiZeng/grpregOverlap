@@ -32,7 +32,8 @@ select(obj,\dots)
 }
 
 \details{
-See R Package \code{\link[grpreg]{grpreg}} for details.
+See R Package \code{\link[grpreg]{grpreg}} for details about the selection criteria
+as well as the methods for computing degrees of freedom.
 }
 
 \value{

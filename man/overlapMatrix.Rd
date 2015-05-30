@@ -33,8 +33,8 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \examples{
-  data(pathway.dat)
-  X <- pathway.dat$expression
-  group <- pathway.dat$pathways
-  overlap.mat <- overlapMatrix(X, group)
+data(pathway.dat)
+X <- pathway.dat$expression
+group <- pathway.dat$pathways
+overlap.mat <- overlapMatrix(X, group)
 }

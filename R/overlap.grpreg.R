@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------------
 overlap.grpreg <- function(X, y, group, 
                            penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
-                                     "cMCP", "gBridge", "gLasso", "gMCP"), 
+                                     "cMCP", "gLasso", "gMCP"), 
                            family=c("gaussian","binomial", "poisson"), 
                            nlambda=100, lambda, 
                            lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},

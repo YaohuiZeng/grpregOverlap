@@ -31,7 +31,7 @@ Similar to other predict methods, this function returns predictions from a fitte
   A fitted \code{"overlap.grpreg"} or \code{"cv.overlap.grpreg"} model object.
   }
   \item{X}{
-  Matrix of values at which predictions are to be made. Not used for \code{type = "coefficients"}
+  Matrix of values at which predictions are to be made. Not used for \code{type="coefficients"}.
   }
   \item{type}{
   Type of prediction: \code{"link"} returns the linear predictors; \code{"response"} gives the fitted values; \code{"class"} returns the binomial outcome with the highest probability; \code{"coefficients"} returns the coefficients; \code{"vars"} returns the indices for the nonzero coefficients; \code{"groups"} returns the indices for the groups with at least one nonzero coefficient; \code{"nvars"} returns the number of nonzero coefficients; \code{"ngroups"} returns the number of groups with at least one nonzero coefficient; \code{"norm"} returns the L2 norm of the coefficients in each group.
@@ -53,7 +53,7 @@ Similar to other predict methods, this function returns predictions from a fitte
 }
 
 \value{
-The object returned depends on the specification on 'type' and 'latent'.
+The object returned depends on the specification on \code{type} and \code{latent}.
 }
 
 \author{
@@ -65,26 +65,26 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \examples{
-  data(pathway.dat)
-  X <- pathway.dat$expression
-  group <- pathway.dat$pathways
-  y <- pathway.dat$mutation
-  fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-  predict(fit, type = 'ngroups', lambda = 0.01)
-  predict(fit, type = 'nvars', lambda = 0.01)
-  predict(fit, type = 'vars', latent = TRUE, lambda = 0.01)
-  predict(fit, type = 'groups', latent = TRUE, lambda = 0.01) # A note printed.
-  predict(fit, X, type="class", lambda=.01)
-  predict(fit, X, type = "coefficients", lambda = 0.01)
-  predict(fit, type="norm", lambda=.01)
+data(pathway.dat)
+X <- pathway.dat$expression
+group <- pathway.dat$pathways
+y <- pathway.dat$mutation
+fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+predict(fit, type = 'ngroups', lambda = 0.01)
+predict(fit, type = 'nvars', lambda = 0.01)
+predict(fit, type = 'vars', latent = TRUE, lambda = 0.01)
+predict(fit, type = 'groups', latent = TRUE, lambda = 0.01) # A note printed.
+predict(fit, X, type="class", lambda=.01)
+predict(fit, X, type = "coefficients", lambda = 0.01)
+predict(fit, type="norm", lambda=.01)
 
-  \dontrun{
-  cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-  coef(cvfit)
-  predict(cvfit, X, type='response')
-  predict(cvfit, X, type = 'link')
-  predict(cvfit, X, type = 'class')
-  }
+\dontrun{
+cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+coef(cvfit)
+predict(cvfit, X, type='response')
+predict(cvfit, X, type = 'link')
+predict(cvfit, X, type = 'class')
+}
 }
 
 \keyword{predict}

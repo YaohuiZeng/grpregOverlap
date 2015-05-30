@@ -67,6 +67,8 @@ overlap.grpreg(X, y, group,
   of the group penalty is \code{lambda*alpha}, while that of the ridge penalty is
   \code{lambda*(1-alpha)}. Default is 1: no L2 penalty.
   }
+  \item{eps}{Convergence threshhold.  The algorithm iterates until the change (on the standardized scale) in any coefficient is less than \code{eps}. Default is \code{.001}.
+  }
   \item{max.iter}{
   The maximum number of iterations. Default is 1000. See \code{\link[grpreg]{grpreg}} 
   for more details.
@@ -171,9 +173,6 @@ with following variables.
   \item{X.latent}{
   The new expanded design matrix for the latent group lasso formulation. The
   variables are reordered according to the order of groups.
-  \item{grp.vec}{
-  A vector of consecutive integers, indicating group membership of latent 
-  variables.}
   }
 }
 \references{
@@ -194,52 +193,52 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 
 \seealso{
 \code{\link{cv.overlap.grpreg}}, \code{\link[=plot.overlap.grpreg]{plot}}, 
-\code{\link[=select.overlap.grpreg]{select}}.
+\code{\link[=select.overlap.grpreg]{select}}, and \code{\link[grpreg]{grpreg}}.
 }
 
 \examples{
-  ## linear regression, a simulation demo.
-  set.seed(123)
-  group <- list(gr1 = c(1, 2, 3), gr2 = c(1, 4), gr3 = c(2, 4, 5), 
-                gr4 = c(3, 5), gr5 = c(6))
-  beta.latent.T <- c(5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 0) # true latent coefficients.
-  # beta.T <- c(2, 3, 7, 0, 5, 0), true variables: 1, 2, 3, 5; true groups: 1, 4.
-  X <- matrix(rnorm(n = 6*100), ncol = 6)  
-  X.latent <- expandX(X, group)
-  y <- X.latent \%*\% beta.latent.T + rnorm(100)
-  
-  fit <- overlap.grpreg(X, y, group, penalty = 'grLasso')
-  # fit <- overlap.grpreg(X, y, group, penalty = 'grMCP')
-  # fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD')
-  coef(fit, latent = TRUE) # compare to beta.latent.T
-  plot(fit, latent = TRUE) 
-  coef(fit, latent = FALSE) # compare to beta.T
-  plot(fit, latent = FALSE)
-  
-  cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
-  plot(cvfit)
-  coef(cvfit)
-  summary(cvfit)
-  
-  ## logistic regression, real data, pathway selection
-  data(pathway.dat)
-  X <- pathway.dat$expression
-  group <- pathway.dat$pathways
-  y <- pathway.dat$mutation
-  fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-  plot(fit)
-  select(fit)
-  select(fit,criterion="AIC",df="active")
-  
-  \dontrun{
-  cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-  coef(cvfit)
-  predict(cvfit, X, type='response')
-  predict(cvfit, X, type = 'class')
-  plot(cvfit)
-  plot(cvfit, type = 'all')
-  summary(cvfit)
-  }
+## linear regression, a simulation demo.
+set.seed(123)
+group <- list(gr1 = c(1, 2, 3), gr2 = c(1, 4), gr3 = c(2, 4, 5), 
+              gr4 = c(3, 5), gr5 = c(6))
+beta.latent.T <- c(5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 0) # true latent coefficients.
+# beta.T <- c(2, 3, 7, 0, 5, 0), true variables: 1, 2, 3, 5; true groups: 1, 4.
+X <- matrix(rnorm(n = 6*100), ncol = 6)  
+X.latent <- expandX(X, group)
+y <- X.latent \%*\% beta.latent.T + rnorm(100)
+
+fit <- overlap.grpreg(X, y, group, penalty = 'grLasso')
+# fit <- overlap.grpreg(X, y, group, penalty = 'grMCP')
+# fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD')
+coef(fit, latent = TRUE) # compare to beta.latent.T
+plot(fit, latent = TRUE) 
+coef(fit, latent = FALSE) # compare to beta.T
+plot(fit, latent = FALSE)
+
+cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
+plot(cvfit)
+coef(cvfit)
+summary(cvfit)
+
+## logistic regression, real data, pathway selection
+data(pathway.dat)
+X <- pathway.dat$expression
+group <- pathway.dat$pathways
+y <- pathway.dat$mutation
+fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+plot(fit)
+select(fit)
+select(fit,criterion="AIC",df="active")
+
+\dontrun{
+cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+coef(cvfit)
+predict(cvfit, X, type='response')
+predict(cvfit, X, type = 'class')
+plot(cvfit)
+plot(cvfit, type = 'all')
+summary(cvfit)
+}
 }
 
 \keyword{overlap.grpreg}
