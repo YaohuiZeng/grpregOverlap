@@ -29,14 +29,14 @@ predict.overlap.grpreg <- function(object, X,
       beta <- coef(object=object, lambda=lambda, latent = TRUE, 
                    which=which, drop = FALSE, ...)
       if (!latent) {
-        cat("The returned is the L2 norm of the latent coefficients! Set latent = 'TRUE' to avoid this warning message!")
+        cat("The returned is the L2 norm of the latent coefficients! Set latent = 'TRUE' to avoid this warning message.\n\n")
       } 
       return(drop(apply(beta[-1, , drop=FALSE], 2, 
                         function(x) tapply(x, object$grp.vec, function(x){sqrt(sum(x^2))}))))
     }
   } else {
     if (type=="vars") 
-      stop("Predicting type 'vars' not implemented with multivariate outcomes")
+      stop("Predicting type 'vars' not implemented with multivariate outcomes\n")
     if (type=="nvars") {
       return(drop(apply(beta[,-1, , drop=FALSE]!=0, 3, FUN=sum)))
     }
@@ -44,16 +44,16 @@ predict.overlap.grpreg <- function(object, X,
       beta <- coef(object=object, lambda=lambda, latent = TRUE, 
                    which=which, drop = FALSE, ...)
       if (!latent) {
-        cat("The returned is the L2 norm of the latent coefficients! Set latent = 'TRUE' to avoid this warning message!")
+        cat("The returned is the L2 norm of the latent coefficients. Set latent = 'TRUE' to avoid this warning message.\n\n")
       } 
       return(drop(apply(beta[, -1, , drop=FALSE], 3, function(x) apply(x, 2, function(x){sqrt(sum(x^2))})))) 
     }
   }
   if (!missing(X) && !is.null(X)) {
-    X <- expandX(X, object$incidence.mat, object$grp.vec)
+    X <- expandX(X, object$group)
   }
   if (latent) {
-    cat("Only latent 'coefficients', 'vars', 'nvars', 'norm' can be returned! Set latent = 'FALSE' to suppress this message!")
+    cat("Only latent 'coefficients', 'vars', 'nvars', 'norm' can be returned! Set latent = 'FALSE' to suppress this message.\n\n")
   }
   obj.new <- object
   obj.new$group <- object$grp.vec
@@ -62,7 +62,6 @@ predict.overlap.grpreg <- function(object, X,
   return(predict(obj.new, X=X, type=type, lambda=lambda, which=which, ...))
 }
 # -------------------------------------------------------------------------------
-
 
 ## function: coef.overlap.grpreg, coef for overlap.grpreg
 # -------------------------------------------------------------------------------

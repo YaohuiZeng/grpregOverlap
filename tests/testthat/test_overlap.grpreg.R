@@ -1,7 +1,5 @@
 library(testthat)
 library(overlap.grpreg)
-library(grpreg)
-# test_file("test_incidence.R")
 
 context("Testing overlap.grpreg()")
 
@@ -150,33 +148,78 @@ test_that("predict, coef, select, cv, against grpreg: ", {
   )  
 })
 
-# test_that("Overlapping fit: ", {
-#   data(pathway.dat)
-#   ## logistic regression, pathway selection
-#   X <- pathway.dat$expression
-#   group <- pathway.dat$pathways
-#   y <- pathway.dat$mutation
-#   fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'grMCP', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'gel', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'cMCP', family = 'binomial')
-# #   print(object.size(cvfit), units = 'Mb')
-#   plot(fit)
-#   plot(fit, latent = FALSE)
-#   predict(fit, type = 'ngroups')
-#   plot(fit, norm = T)
-#   str(select(fit, "AIC"))
-#   
-#   predict(fit, X, type="class", lambda=0.04)
-# 
-#   cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-#   coef(cvfit)
-#   predict(cvfit, X)
-#   predict(cvfit, X, type='response')
-#   predict(cvfit, X, type = 'link')
-#   predict(cvfit, X, type = 'class')
-#   plot(cvfit)
-#   plot(cvfit, type = 'all')
-#   summary(cvfit)
-# })
+test_that("Overlapping fit: ", {
+  
+  ## linear regression, a simulation demo.
+  set.seed(123)
+  group <- list(gr1 = c(1, 2, 3),
+                gr2 = c(1, 4),
+                gr3 = c(2, 4, 5),
+                gr4 = c(3, 5),
+                gr5 = c(6))
+  
+  beta.latent.T <- c(5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 0) # true latent coefficients.
+  # beta.T <- c(2, 3, 7, 0, 5, 0), true variables: 1, 2, 3, 5; true groups: 1, 4.
+  X <- matrix(rnorm(n = 6*100), ncol = 6)
+  incid.mat <- incidenceMatrix(X, group) # group membership incidence matrix
+  over.mat <- Matrix(incid.mat %*% t(incid.mat)) # overlap matrix
+#   grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector  
+  X.latent <- expandX(X, group)
+  y <- X.latent %*% beta.latent.T + rnorm(100)
+  
+  fit <- overlap.grpreg(X, y, group, penalty = 'grLasso')
+#   fit <- overlap.grpreg(X, y, group, penalty = 'grMCP')
+#   fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD')
+  coef(fit, latent = TRUE) # compare to beta.latent.T
+  plot(fit, latent = TRUE) 
+  coef(fit, latent = FALSE) # compare to beta.T
+  plot(fit, latent = FALSE)
+  predict(fit, type = 'vars', latent = T, lambda = 4)
+  predict(fit, type = 'vars', latent = F, lambda = 4)
+  select(fit, "BIC")
+  select(fit, "AIC")
+
+  cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
+  plot(cvfit)
+  par(mfrow=c(2,2))
+  plot(cvfit, type="all")
+  coef(cvfit)
+  summary(cvfit)
+
+  
+  ## logistic regression, real data, pathway selection
+  data(pathway.dat)
+  X <- pathway.dat$expression
+  group <- pathway.dat$pathways
+  y <- pathway.dat$mutation
+  fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+#   fit <- overlap.grpreg(X, y, group, penalty = 'grMCP', family = 'binomial')
+#   fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD', family = 'binomial')
+#   fit <- overlap.grpreg(X, y, group, penalty = 'gel', family = 'binomial')
+#   fit <- overlap.grpreg(X, y, group, penalty = 'cMCP', family = 'binomial')
+#   print(object.size(cvfit), units = 'Mb')
+  plot(fit)
+  plot(fit, latent = FALSE)
+  plot(fit, norm = TRUE)
+  plot(fit, norm = T)
+
+  predict(fit, type = 'ngroups', lambda = 0.01)
+  predict(fit, type = 'nvars', lambda = 0.01)
+  predict(fit, type = 'vars', latent = TRUE, lambda = 0.01)
+  predict(fit, type = 'groups', latent = TRUE, lambda = 0.01) # A note printed.
+  predict(fit, X, type="class", lambda=.01)
+  predict(fit, X, type = "coefficients", lambda = 0.01)
+  predict(fit, type="norm", lambda=.01)
+  
+  select(fit)
+  select(fit,crit="AIC",df="active")
+
+  cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+  coef(cvfit)
+  predict(cvfit, X, type='response')
+  predict(cvfit, X, type = 'class')
+  plot(cvfit)
+  plot(cvfit, type = 'all')
+  summary(cvfit)
+
+})

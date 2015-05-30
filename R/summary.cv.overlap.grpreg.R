@@ -14,7 +14,6 @@ summary.cv.overlap.grpreg <- function(object, ...) {
         p.latent <- d.latent[1] - 1
     }
     res$p.latent <- p.latent
-    res$d.latent <- d.latent
     class(res) <- c('summary.cv.overlap.grpreg', 'summary.cv.grpreg')
     res
 }

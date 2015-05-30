@@ -22,8 +22,8 @@ overlap.grpreg <- function(X, y, group,
 
   incid.mat <- incidenceMatrix(X, group) # group membership incidence matrix
   over.mat <- over.temp <- Matrix(incid.mat %*% t(incid.mat)) # overlap matrix
-  grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector  
-  X.latent <- expandX(X, incid.mat, grp.vec)
+  grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector
+  X.latent <- expandX(X, group)
   
   diag(over.temp) <- 0
   if (all(over.temp == 0)) {
@@ -75,11 +75,16 @@ gamma2beta<- function(gamma, incidence.mat, grp.vec) {
 
 ## function: expand design matrix X to overlapping design matrix (X.latent)
 # -------------------------------------------------------------------------------
-expandX <- function(X, incidence.mat, grp.vec) {
+expandX <- function(X, group) {
+  incidence.mat <- incidenceMatrix(X, group) # group membership incidence matrix
+  over.mat <- Matrix(incidence.mat %*% t(incidence.mat)) # overlap matrix
+  grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector
+  
   # expand X to X.latent
   X.latent <- NULL
   
   ## TODO:
+  ## (0) Need to fix bugs of the colnames.
   ## (1) handle cases where variables not belong to any of groups in 'group'
   ## put each variable into a separate group, stack those group at right
   ## (2) provide option of removing groups including only one variable.
@@ -88,6 +93,7 @@ expandX <- function(X, incidence.mat, grp.vec) {
   ## the following code will automatically remove variables not included in 'group'
   for(i in 1:nrow(incidence.mat)) {
     X.latent <- cbind(X.latent, X[, incidence.mat[i,]==1, drop=FALSE])
+#     colnames(X.latent) <- c(colnames(X.latent), colnames(X)[incidence.mat[i,]==1])
   }
   colnames(X.latent) <- paste('grp', grp.vec, '_', 
                               colnames(X.latent), sep = "")
