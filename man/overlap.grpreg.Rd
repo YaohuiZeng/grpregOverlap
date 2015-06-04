@@ -165,6 +165,10 @@ with following variables.
   \item{incidence.mat}{
   Incidence matrix: I[i, j] = 1 if group i contains variable j; otherwise 0.
   }
+  \item{grp.vec}{
+  A vector of consecutive integers indicating grouping information of variables. This
+  is equivalent to argument \code{group} in \code{\link[grpreg]{grpreg}}.
+  }
   \item{overlap.mat}{
   A square matrix \eqn{C} where \eqn{C[i, j]} is the number of overlapped 
   variables between group i and j. Diagonal value \eqn{C[i, i]} is therefore the 
