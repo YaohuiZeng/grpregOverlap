@@ -4,7 +4,6 @@
 plot.overlap.grpreg <- function(x, legend.loc, alpha=1, latent = TRUE, 
                                 log.l = FALSE, norm = FALSE, ...) {
   if (norm) {
-    latent <- TRUE
     Y <- predict(x, type="norm", latent = TRUE)
     if (any(x$grp.vec==0)) Y <- Y[-1,] ## will implement this later
     nonzero <- which(apply(abs(Y), 1, sum)!=0)
@@ -64,18 +63,36 @@ plot.overlap.grpreg <- function(x, legend.loc, alpha=1, latent = TRUE,
   
   cols <- hcl(h=seq(15,375,len=max(4,n.g+1)),l=60,c=150,alpha=alpha)
   cols <- if (n.g==2) cols[c(1,3)] else cols[1:n.g]
+
+  if (!latent && !norm) {
+    cols <- hcl(h=seq(15,375,len=max(4,length(nonzero)+1)),l=60,c=150,alpha=alpha)
+  }
+
   line.args <- list(col=cols, lwd=1+2*exp(-p/20), lty=1, pch="")
   if (length(new.args)) line.args[names(new.args)] <- new.args
   line.args$x <- l
   line.args$y <- t(Y)
-  line.args$col <- line.args$col[g]
-  line.args$lty <- rep(line.args$lty, length.out=max(g))
-  line.args$lty <- line.args$lty[g]
+
+  if (!latent && !norm) {
+    line.args$col <- line.args$col[1:length(nonzero)]
+    line.args$lty <- rep(line.args$lty, length.out=length(nonzero))
+    line.args$lty <- line.args$lty[1:length(nonzero)]
+  } else {
+    line.args$col <- line.args$col[g]
+    line.args$lty <- rep(line.args$lty, length.out=max(g))
+    line.args$lty <- line.args$lty[g]
+  }
+
   do.call("matlines",line.args)
   
   if(!missing(legend.loc)) {
     legend.args <- list(col=cols, lwd=line.args$lwd, lty=line.args$lty, 
                         legend=names(x$group.multiplier))
+    if (!latent && !norm) {
+      legend.args <- list(col=cols, lwd=line.args$lwd, lty=line.args$lty, 
+                          legend=rownames(fit$beta)[nonzero+1])
+    }
+    
     if (length(new.args)) {
       new.legend.args <- new.args[names(new.args) %in% names(formals(legend))]
       legend.args[names(new.legend.args)] <- new.legend.args
