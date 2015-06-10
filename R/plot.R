@@ -86,12 +86,14 @@ plot.overlap.grpreg <- function(x, legend.loc, alpha=1, latent = TRUE,
   do.call("matlines",line.args)
   
   if(!missing(legend.loc)) {
-    legend.args <- list(col=cols, lwd=line.args$lwd, lty=line.args$lty, 
-                        legend=names(x$group.multiplier))
-    if (!latent && !norm) {
-      legend.args <- list(col=cols, lwd=line.args$lwd, lty=line.args$lty, 
-                          legend=rownames(fit$beta)[nonzero+1])
+    if(norm) {
+      legends <- names(x$group)[nonzero]
+    } else {
+      legends <- rownames(beta)[ind]
     }
+    
+    legend.args <- list(col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, 
+                        legend=legends)
     
     if (length(new.args)) {
       new.legend.args <- new.args[names(new.args) %in% names(formals(legend))]
