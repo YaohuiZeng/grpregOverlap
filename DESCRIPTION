@@ -1,4 +1,4 @@
-Package: overlap.grpreg
+Package: grpregOverlap
 Type: Package
 Title: Penalized Regression Models with Overlapping Grouped Covariates 
 Version: 1.0-1
