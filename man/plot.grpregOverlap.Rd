@@ -1,19 +1,19 @@
-\name{plot.overlap.grpreg}
-\alias{plot.overlap.grpreg}
+\name{plot.grpregOverlap}
+\alias{plot.grpregOverlap}
 
 \title{
-Plot object "overlap.grpreg"
+Plot object "grpregOverlap"
 }
 \description{
 Plot the paths of estimated coefficients, latent coefficients (default), or L2 
-norms of the groups for a fitted object "overlap.grpreg".
+norms of the groups for a fitted object "grpregOverlap".
 }
 \usage{
-\method{plot}{overlap.grpreg}(x, legend.loc, alpha = 1, latent = TRUE, log.l = FALSE, norm = FALSE, ...)
+\method{plot}{grpregOverlap}(x, legend.loc, alpha = 1, latent = TRUE, log.l = FALSE, norm = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{The fitted \code{"overlap.grpreg"} object.}
+  \item{x}{The fitted \code{"grpregOverlap"} object.}
   \item{legend.loc}{
   Where to put the legend?  If left unspecified, no legend is drawn.  
   See \code{legend} for details.}
@@ -37,11 +37,11 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}
+\code{\link{grpregOverlap}}
 }
 
 \examples{
-## See examples in 'overlap.grpreg'
+## See examples in 'grpregOverlap'
 }
 
 \keyword{graphics}
