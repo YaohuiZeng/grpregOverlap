@@ -1,6 +1,6 @@
-## function: predict overlap.grpreg
+## function: predict grpregOverlap
 # -------------------------------------------------------------------------------
-predict.overlap.grpreg <- function(object, X, 
+predict.grpregOverlap <- function(object, X, 
                                    type=c("link", "response", "class", 
                                           "coefficients", "vars", "groups", 
                                           "nvars", "ngroups", "norm"), 
@@ -63,9 +63,9 @@ predict.overlap.grpreg <- function(object, X,
 }
 # -------------------------------------------------------------------------------
 
-## function: coef.overlap.grpreg, coef for overlap.grpreg
+## function: coef.grpregOverlap, coef for grpregOverlap
 # -------------------------------------------------------------------------------
-coef.overlap.grpreg <- function(object, lambda, latent = FALSE, 
+coef.grpregOverlap <- function(object, lambda, latent = FALSE, 
                                 which=1:length(object$lambda), drop=TRUE, ...) {
   obj.new <- object
   obj.new$beta <- object$beta.latent
