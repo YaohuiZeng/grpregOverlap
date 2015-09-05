@@ -14,10 +14,10 @@ expandX(X, group)
 
 \arguments{
   \item{X}{
-The design matrix, without an intercept, as in \code{overlap.grpreg}.
+The design matrix, without an intercept, as in \code{grpregOverlap}.
 }
   \item{group}{
-A list of vectors containing group information, as in \code{overlap.grpreg}.
+A list of vectors containing group information, as in \code{grpregOverlap}.
 }
 }
 
@@ -35,7 +35,7 @@ not included in \code{group} will be removed automatically.
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}, \code{\link{overlapMatrix}}.
+\code{\link{grpregOverlap}}, \code{\link{overlapMatrix}}.
 }
 
 \examples{
