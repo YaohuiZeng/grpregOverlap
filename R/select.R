@@ -1,6 +1,6 @@
 ## function: select, experimental
 # -------------------------------------------------------------------------------
-select.overlap.grpreg <- function(obj, criterion=c("BIC","AIC",
+select.grpregOverlap <- function(obj, criterion=c("BIC","AIC",
                                                    "GCV","AICc","EBIC"), 
                                   df.method=c("default","active"), 
                                   smooth=FALSE, ...) {
