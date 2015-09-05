@@ -1,4 +1,4 @@
 library(testthat)
-library(overlap.grpreg)
+library(grpregOverlap)
 
-test_check("overlap.grpreg")
+test_check("grpregOverlap")
