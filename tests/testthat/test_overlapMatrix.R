@@ -1,5 +1,5 @@
 library(testthat)
-library(overlap.grpreg)
+library(grpregOverlap)
 
 context("Testing incidenceMatrix(), overlapMatrix()")
 data(birthwt.grpreg)
