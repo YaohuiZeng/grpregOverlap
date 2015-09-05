@@ -1,5 +1,5 @@
-\name{overlap.grpreg-package}
-\alias{overlap.grpreg-package}
+\name{grpregOverlap-package}
+\alias{grpregOverlap-package}
 \docType{package}
 \title{
 Penalized regression models with overlapping grouped variables.
@@ -17,12 +17,12 @@ following functions are documented in the help pages:
   \itemize{
     \item \code{\link{expandX}}
     \item \code{\link{overlapMatrix}}
-    \item \code{\link{overlap.grpreg}}
-    \item \code{\link{cv.overlap.grpreg}}
-    \item \code{\link{plot.overlap.grpreg}}
-    \item \code{\link{predict.overlap.grpreg}}
-    \item \code{\link{select.overlap.grpreg}}
-    \item \code{\link{summary.cv.overlap.grpreg}}
+    \item \code{\link{grpregOverlap}}
+    \item \code{\link{cv.grpregOverlap}}
+    \item \code{\link{plot.grpregOverlap}}
+    \item \code{\link{predict.grpregOverlap}}
+    \item \code{\link{select.grpregOverlap}}
+    \item \code{\link{summary.cv.grpregOverlap}}
   }
   
 The following data sets are documented in the help pages:
@@ -49,5 +49,5 @@ The following data sets are documented in the help pages:
 \keyword{package}
 
 \examples{
-## see examples in overlap.grpreg
+## see examples in grpregOverlap
 }
