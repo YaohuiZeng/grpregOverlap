@@ -1,27 +1,27 @@
-\name{select.overlap.grpreg}
-\alias{select.overlap.grpreg}
+\name{select.grpregOverlap}
+\alias{select.grpregOverlap}
 \alias{select}
 
 \title{
 Select an value of lambda along a regularization path
 }
 \description{
-The function selects a point along the regularization path of a fitted "overlap.grpreg object" according to the AIC, BIC, or GCV criteria.
+The function selects a point along the regularization path of a fitted "grpregOverlap object" according to the AIC, BIC, or GCV criteria.
 }
 \usage{
 select(obj,\dots)
 
-\method{select}{overlap.grpreg}(obj, criterion = c("BIC", "AIC", "GCV", "AICc", "EBIC"), 
+\method{select}{grpregOverlap}(obj, criterion = c("BIC", "AIC", "GCV", "AICc", "EBIC"), 
     df.method = c("default", "active"), smooth = FALSE, ...)
 }
 
 \arguments{
-  \item{obj}{A fitted \code{"overlap.grpreg"} model object.}
+  \item{obj}{A fitted \code{"grpregOverlap"} model object.}
   \item{criterion}{
   The criterion by which to select the regularization parameter. One of \code{"AIC"}, \code{"BIC"}, \code{"GCV"}, \code{"AICc"}, or \code{"EBIC"}; default is \code{"BIC"}.
 }
   \item{df.method}{
-  How should effective model parameters be calculated? One of: \code{"active"}, which counts the number of nonzero coefficients; or \code{"default"}, which uses the calculated \code{df} returned by \code{overlap.grpreg}.  Default is \code{"default"}.
+  How should effective model parameters be calculated? One of: \code{"active"}, which counts the number of nonzero coefficients; or \code{"default"}, which uses the calculated \code{df} returned by \code{grpregOverlap}.  Default is \code{"default"}.
 }
   \item{smooth}{
   Applies a smoother to the information criteria before selecting the optimal value.
@@ -50,9 +50,9 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}
+\code{\link{grpregOverlap}}
 }
 
 \examples{
-## See examples in "overlap.grpreg".
+## See examples in "grpregOverlap".
 }
