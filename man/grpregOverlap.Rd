@@ -1,5 +1,5 @@
-\name{overlap.grpreg}
-\alias{overlap.grpreg}
+\name{grpregOverlap}
+\alias{grpregOverlap}
 \title{
 Fit penalized regression models with overlapping grouped variables
 }
@@ -13,7 +13,7 @@ and the composite MCP (Huang et al., 2012) are also available.
 }
 
 \usage{
-overlap.grpreg(X, y, group, 
+grpregOverlap(X, y, group, 
     penalty=c("grLasso", "grMCP", "grSCAD", "gel", "cMCP", "gLasso", "gMCP"), 
     family=c("gaussian","binomial", "poisson"), nlambda=100, lambda, 
     lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05}, alpha=1, eps=.001, 
@@ -25,7 +25,7 @@ overlap.grpreg(X, y, group,
 
 \arguments{
   \item{X}{
-  The design matrix, without an intercept.  \code{overlap.grpreg} calls 
+  The design matrix, without an intercept.  \code{grpregOverlap} calls 
   \code{grpreg}, which standardizes the data and includes an intercept by default.
   }
   \item{y}{
@@ -112,7 +112,7 @@ way such that it's equivalent to a classical non-overlapping group lasso problem
 in an new space, which is expanded by duplicating the columns of overlapped variables.
 For technical details, see (Jacob et al., 2009) and (Obozinski et al., 2011).
 
-\code{overlap.grpreg} takes input design matrix \code{X} and grouping information
+\code{grpregOverlap} takes input design matrix \code{X} and grouping information
 \code{group}, and expands {X} to the new, non-overlapping space. It then calls
 \code{grpreg} for modeling fitting based on group coordinate decent algorithm. Unlike
 in \code{grpreg}, the interface for group bridge-penalized method is not implemented
@@ -127,7 +127,7 @@ For more detailed explanation to the penalties and algorithm, see \code{\link[gr
 }
 
 \value{
-An object with S3 class \code{"overlap.grpreg"}, which inherits \code{"grpreg"}, 
+An object with S3 class \code{"grpregOverlap"}, which inherits \code{"grpreg"}, 
 with following variables.
   \item{beta}{
   The fitted matrix of coefficients. The number of rows is equal to the number 
@@ -196,8 +196,8 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{cv.overlap.grpreg}}, \code{\link[=plot.overlap.grpreg]{plot}}, 
-\code{\link[=select.overlap.grpreg]{select}}, and \code{\link[grpreg]{grpreg}}.
+\code{\link{cv.grpregOverlap}}, \code{\link[=plot.grpregOverlap]{plot}}, 
+\code{\link[=select.grpregOverlap]{select}}, and \code{\link[grpreg]{grpreg}}.
 }
 
 \examples{
@@ -211,15 +211,15 @@ X <- matrix(rnorm(n = 6*100), ncol = 6)
 X.latent <- expandX(X, group)
 y <- X.latent \%*\% beta.latent.T + rnorm(100)
 
-fit <- overlap.grpreg(X, y, group, penalty = 'grLasso')
-# fit <- overlap.grpreg(X, y, group, penalty = 'grMCP')
-# fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD')
+fit <- grpregOverlap(X, y, group, penalty = 'grLasso')
+# fit <- grpregOverlap(X, y, group, penalty = 'grMCP')
+# fit <- grpregOverlap(X, y, group, penalty = 'grSCAD')
 coef(fit, latent = TRUE) # compare to beta.latent.T
 plot(fit, latent = TRUE) 
 coef(fit, latent = FALSE) # compare to beta.T
 plot(fit, latent = FALSE)
 
-cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
+cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grMCP')
 plot(cvfit)
 coef(cvfit)
 summary(cvfit)
@@ -229,13 +229,13 @@ data(pathway.dat)
 X <- pathway.dat$expression
 group <- pathway.dat$pathways
 y <- pathway.dat$mutation
-fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+fit <- grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
 plot(fit)
 select(fit)
 select(fit,criterion="AIC",df="active")
 
 \dontrun{
-cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
 coef(cvfit)
 predict(cvfit, X, type='response')
 predict(cvfit, X, type = 'class')
@@ -245,5 +245,5 @@ summary(cvfit)
 }
 }
 
-\keyword{overlap.grpreg}
+\keyword{grpregOverlap}
 \keyword{models}
