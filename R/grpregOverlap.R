@@ -1,6 +1,6 @@
 ## function: overlapping group selection based on R Package 'grpreg' 
 # ------------------------------------------------------------------------------
-overlap.grpreg <- function(X, y, group, 
+grpregOverlap <- function(X, y, group, 
                            penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
                                      "cMCP", "gLasso", "gMCP"), 
                            family=c("gaussian","binomial", "poisson"), 
@@ -44,9 +44,9 @@ overlap.grpreg <- function(X, y, group,
   fit$grp.vec <- grp.vec # this is 'group' argument in Package 'grpreg'
   fit$X.latent <- X.latent
   fit$overlap.mat <- over.mat
-  # get results, store in new class 'overlap.grpreg', and inherited from 'grpreg'
+  # get results, store in new class 'grpregOverlap', and inherited from 'grpreg'
   val <- structure(fit,
-                   class = c('overlap.grpreg', 'grpreg'))
+                   class = c('grpregOverlap', 'grpreg'))
   val
 }
 # -------------------------------------------------------------------------------
