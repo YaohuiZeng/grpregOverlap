@@ -1,7 +1,7 @@
 library(testthat)
-library(overlap.grpreg)
+library(grpregOverlap)
 
-context("Testing overlap.grpreg()")
+context("Testing grpregOverlap()")
 
 test_that("Non-overlapping fit againt grpreg:", {
   data(birthwt.grpreg)
@@ -14,7 +14,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   ## linear regression
   y <- birthwt.grpreg$bwt
   invisible(capture.output({
-    fit <- overlap.grpreg(X, y, group, penalty = 'grLasso')
+    fit <- grpregOverlap(X, y, group, penalty = 'grLasso')
   }))
   # x == x.latent, test expandX()
   expect_equal(all(X == fit$X.latent), TRUE) 
@@ -31,7 +31,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   ## logistic regression
   y <- birthwt.grpreg$low
   invisible(capture.output({
-    fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+    fit <- grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
   }))
   # x == x.latent, test expandX()
   expect_equal(all(X == fit$X.latent), TRUE) 
@@ -48,7 +48,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   ## logistic regression
   y <- birthwt.grpreg$low
   invisible(capture.output({
-    fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+    fit <- grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
   }))
   # x == x.latent, test expandX()
   expect_equal(all(X == fit$X.latent), TRUE) 
@@ -74,7 +74,7 @@ test_that("predict, coef, select, cv, against grpreg: ", {
   ## logistic regression
   y <- birthwt.grpreg$low
   invisible(capture.output({
-    fit <- overlap.grpreg(X, y, group, penalty = 'grMCP', family = 'binomial')
+    fit <- grpregOverlap(X, y, group, penalty = 'grMCP', family = 'binomial')
   }))
   
   ## test predict, coef againt grpreg
@@ -118,7 +118,7 @@ test_that("predict, coef, select, cv, against grpreg: ", {
     }))
   
   invisible(capture.output({
-    cvfit <- cv.overlap.grpreg(X, y, group, family="binomial", penalty="grMCP", 
+    cvfit <- cv.grpregOverlap(X, y, group, family="binomial", penalty="grMCP", 
                                seed = 1234)
   }))
   
@@ -136,7 +136,7 @@ test_that("predict, coef, select, cv, against grpreg: ", {
   ## test select
   y <- birthwt.grpreg$bwt
   invisible(capture.output({
-    fit <- overlap.grpreg(X, y, group, penalty="grLasso")
+    fit <- grpregOverlap(X, y, group, penalty="grLasso")
   }))
   fit2 <- grpreg(X, y, group2, penalty="grLasso")
   expect_equal(all(select(fit)$lambda == select(fit2)$lambda), TRUE)
@@ -167,9 +167,9 @@ test_that("predict, coef, select, cv, against grpreg: ", {
 #   X.latent <- expandX(X, group)
 #   y <- X.latent %*% beta.latent.T + rnorm(100)
 #   
-#   fit <- overlap.grpreg(X, y, group, penalty = 'grLasso')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'grMCP')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD')
+#   fit <- grpregOverlap(X, y, group, penalty = 'grLasso')
+# #   fit <- grpregOverlap(X, y, group, penalty = 'grMCP')
+# #   fit <- grpregOverlap(X, y, group, penalty = 'grSCAD')
 #   coef(fit, latent = TRUE) # compare to beta.latent.T
 #   plot(fit, latent = TRUE) 
 #   coef(fit, latent = FALSE) # compare to beta.T
@@ -179,7 +179,7 @@ test_that("predict, coef, select, cv, against grpreg: ", {
 #   select(fit, "BIC")
 #   select(fit, "AIC")
 # 
-#   cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
+#   cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grMCP')
 #   plot(cvfit)
 #   par(mfrow=c(2,2))
 #   plot(cvfit, type="all")
@@ -192,11 +192,11 @@ test_that("predict, coef, select, cv, against grpreg: ", {
 #   X <- pathway.dat$expression
 #   group <- pathway.dat$pathways
 #   y <- pathway.dat$mutation
-#   fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'grMCP', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'grSCAD', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'gel', family = 'binomial')
-# #   fit <- overlap.grpreg(X, y, group, penalty = 'cMCP', family = 'binomial')
+#   fit <- grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
+# #   fit <- grpregOverlap(X, y, group, penalty = 'grMCP', family = 'binomial')
+# #   fit <- grpregOverlap(X, y, group, penalty = 'grSCAD', family = 'binomial')
+# #   fit <- grpregOverlap(X, y, group, penalty = 'gel', family = 'binomial')
+# #   fit <- grpregOverlap(X, y, group, penalty = 'cMCP', family = 'binomial')
 # #   print(object.size(cvfit), units = 'Mb')
 #   plot(fit)
 #   plot(fit, latent = FALSE)
@@ -214,7 +214,7 @@ test_that("predict, coef, select, cv, against grpreg: ", {
 #   select(fit)
 #   select(fit,crit="AIC",df="active")
 # 
-#   cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+#   cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
 #   coef(cvfit)
 #   predict(cvfit, X, type='response')
 #   predict(cvfit, X, type = 'class')
