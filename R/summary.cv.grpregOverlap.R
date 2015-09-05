@@ -1,6 +1,6 @@
-## function: summary cv.overlap.grpreg, need revise
+## function: summary cv.grpregOverlap, need revise
 # ------------------------------------------------------------------------------
-summary.cv.overlap.grpreg <- function(object, ...) {
+summary.cv.grpregOverlap <- function(object, ...) {
     obj.new <- object
     class(obj.new) <- 'cv.grpreg'
     res <- summary(obj.new, ...)
@@ -14,14 +14,14 @@ summary.cv.overlap.grpreg <- function(object, ...) {
         p.latent <- d.latent[1] - 1
     }
     res$p.latent <- p.latent
-    class(res) <- c('summary.cv.overlap.grpreg', 'summary.cv.grpreg')
+    class(res) <- c('summary.cv.grpregOverlap', 'summary.cv.grpreg')
     res
 }
 # -------------------------------------------------------------------------------
 
-## function: print summary.cv.overlap.grpreg
+## function: print summary.cv.grpregOverlap
 # -------------------------------------------------------------------------------
-print.summary.cv.overlap.grpreg <- function(x, digits, ...) {
+print.summary.cv.grpregOverlap <- function(x, digits, ...) {
     if (missing(digits)) {
         digits <- c(2, 4, 2, 2, 3)
     } else {
