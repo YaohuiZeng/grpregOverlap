@@ -1,7 +1,7 @@
 
-## function: plot overlap.grpreg
+## function: plot grpregOverlap
 # ------------------------------------------------------------------------------
-plot.overlap.grpreg <- function(x, legend.loc, alpha=1, latent = TRUE, 
+plot.grpregOverlap <- function(x, legend.loc, alpha=1, latent = TRUE, 
                                 log.l = FALSE, norm = FALSE, ...) {
   if (norm) {
     Y <- predict(x, type="norm", latent = TRUE)
