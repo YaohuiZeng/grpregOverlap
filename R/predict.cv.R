@@ -1,7 +1,7 @@
 
-## function: predict cv.overlap.grpreg
+## function: predict cv.grpregOverlap
 # -------------------------------------------------------------------------------
-predict.cv.overlap.grpreg <- function(object, X, type=c("link", "response", "class", "coefficients", "vars", "groups", "nvars", "ngroups", "norm"),
+predict.cv.grpregOverlap <- function(object, X, type=c("link", "response", "class", "coefficients", "vars", "groups", "nvars", "ngroups", "norm"),
                                       latent = FALSE, lambda = object$lambda.min,
                                       which=object$min, ...) {
   type <- match.arg(type)
@@ -9,7 +9,7 @@ predict.cv.overlap.grpreg <- function(object, X, type=c("link", "response", "cla
           which=which, ...)
 }
 
-coef.cv.overlap.grpreg <- function(object, latent = FALSE, lambda = object$lambda.min,
+coef.cv.grpregOverlap <- function(object, latent = FALSE, lambda = object$lambda.min,
                                    which = object$min, ...) {
   coef(object$fit, lambda=lambda, latent=latent, which=which, ...)
 }
