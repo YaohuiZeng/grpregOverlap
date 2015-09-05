@@ -1,5 +1,5 @@
-\name{cv.overlap.grpreg}
-\alias{cv.overlap.grpreg}
+\name{cv.grpregOverlap}
+\alias{cv.grpregOverlap}
 
 \title{
 Cross-validation for choosing regularization parameter lambda
@@ -9,15 +9,15 @@ Cross-validation for choosing regularization parameter lambda
 Performs k-fold cross validation for penalized regression models with overlapping grouped covariates over a grid of values for the regularization parameter lambda.
 }
 \usage{
-cv.overlap.grpreg(X, y, group, ..., nfolds = 10, seed, trace = FALSE)
+cv.grpregOverlap(X, y, group, ..., nfolds = 10, seed, trace = FALSE)
 }
 
 \arguments{
-  \item{X}{The design matrix, without an intercept, as in \code{overlap.grpreg}.}
-  \item{y}{The response vector (or matrix), as in \code{overlap.grpreg}.}
-  \item{group}{A list of vectors containing group information, as in \code{overlap.grpreg}.}
+  \item{X}{The design matrix, without an intercept, as in \code{grpregOverlap}.}
+  \item{y}{The response vector (or matrix), as in \code{grpregOverlap}.}
+  \item{group}{A list of vectors containing group information, as in \code{grpregOverlap}.}
   \item{\dots}{
-Additional arguments to \code{overlap.grpreg}.}
+Additional arguments to \code{grpregOverlap}.}
   \item{nfolds}{
 The number of cross-validation folds.  Default is 10.
 }
@@ -35,7 +35,7 @@ This function is built upon \code{\link[grpreg]{cv.grpreg}}. The class can direc
 }
 
 \value{
-An object with S3 class \code{"cv.overlap.grpreg"}, which inherits from class \code{"cv.grpreg"}. 
+An object with S3 class \code{"cv.grpregOverlap"}, which inherits from class \code{"cv.grpreg"}. 
 The following variables are contained in the class (adopted from \code{\link[grpreg]{cv.grpreg}}).
   \item{cve}{The error for each value of \code{lambda}, averaged across the cross-validation folds.}
   \item{cvse}{The estimated standard error associated with each value of for \code{cve}.}
@@ -59,7 +59,7 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}, \code{\link{predict.overlap.grpreg}}, \code{\link[=summary.cv.overlap.grpreg]{summary}}, and \code{\link[grpreg]{cv.grpreg}}.
+\code{\link{grpregOverlap}}, \code{\link{predict.grpregOverlap}}, \code{\link[=summary.cv.grpregOverlap]{summary}}, and \code{\link[grpreg]{cv.grpreg}}.
 }
 
 \examples{
@@ -76,7 +76,7 @@ X <- matrix(rnorm(n = 6*100), ncol = 6)
 X.latent <- expandX(X, group)
 y <- X.latent \%*\% beta.latent.T + rnorm(100)
 
-cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grMCP')
+cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grMCP')
 summary(cvfit)
 plot(cvfit)
 par(mfrow=c(2,2))
