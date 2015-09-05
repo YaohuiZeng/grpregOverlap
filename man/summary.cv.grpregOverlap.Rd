@@ -1,36 +1,36 @@
-\name{summary.cv.overlap.grpreg}
-\alias{summary.cv.overlap.grpreg}
-\alias{print.summary.cv.overlap.grpreg}
+\name{summary.cv.grpregOverlap}
+\alias{summary.cv.grpregOverlap}
+\alias{print.summary.cv.grpregOverlap}
 
 \title{
 Summarizing inferences based on cross-validation
 }
 
 \description{
-Summary method for \code{cv.overlap.grpreg} objects
+Summary method for \code{cv.grpregOverlap} objects
 }
 
 \usage{
-\method{summary}{cv.overlap.grpreg}(object, ...)
+\method{summary}{cv.grpregOverlap}(object, ...)
 
-\method{print}{summary.cv.overlap.grpreg}(x, digits, ...)
+\method{print}{summary.cv.grpregOverlap}(x, digits, ...)
 }
 
 \arguments{
-  \item{object}{A \code{"cv.overlap.grpreg"} object for \code{summary} function.
+  \item{object}{A \code{"cv.grpregOverlap"} object for \code{summary} function.
   }
   \item{x}{
-    A \code{"summary.cv.overlap.grpreg"} object for \code{print} function.
+    A \code{"summary.cv.grpregOverlap"} object for \code{print} function.
 }
   \item{digits}{Number of digits past the decimal point to print out. Can be a vector specifying different display digits for each of the five non-integer printed values.}
   \item{\dots}{Further arguments passed to or from other methods.}
 }
 
 \value{
-\code{summary.cv.overlap.grpreg} produces an object with S3 class \code{"summary.cv.overlap.grpreg"} which inherits class \code{"summary.cv.grpreg"}. The object contains the following list elements:
-  \item{penalty}{The penalty used by \code{overlap.grpreg}.}
+\code{summary.cv.grpregOverlap} produces an object with S3 class \code{"summary.cv.grpregOverlap"} which inherits class \code{"summary.cv.grpreg"}. The object contains the following list elements:
+  \item{penalty}{The penalty used by \code{grpregOverlap}.}
   \item{model}{Either \code{"linear"} or \code{"logistic"}, depending on
-    the \code{family} option in \code{overlap.grpreg}.}
+    the \code{family} option in \code{grpregOverlap}.}
   \item{n}{Number of observations}
   \item{p}{Number of regression coefficients (not including the intercept).}
   \item{p.latent}{Number of latent coefficients (not including the intercept).}
@@ -55,8 +55,8 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}, \code{\link{cv.overlap.grpreg}}
+\code{\link{grpregOverlap}}, \code{\link{cv.grpregOverlap}}
 }
 \examples{
-## See examples in "overlap.grpreg" and "cv.overlap.grpreg".
+## See examples in "grpregOverlap" and "cv.grpregOverlap".
 }
