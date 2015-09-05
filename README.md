@@ -1,6 +1,6 @@
-# overlap.grpreg
+# grpregOverlap
 
-`overlap.grpreg` fits the regularization path of linear, logistic or poisson 
+`grpregOverlap` fits the regularization path of linear, logistic or poisson 
 models with overlapping grouped covariates based on the latent group lasso 
 approach (Jacob et al., 2009). Latent group MCP/SCAD as well as bi-level 
 selection methods, namely the group exponential lasso(Breheny, 2015) and the 
@@ -9,7 +9,7 @@ an extension of R package `grpreg` (by Dr. Patrick Breheny <patrick-breheny@uiow
 for grouped variable selection involving overlaps between groups.
 
 To install:
-* the latest version (requires devtools): install_github("YaohuiZeng/overlap.grpreg")
+* the latest version (requires devtools): install_github("YaohuiZeng/grpregOverlap")
 
 To report bugs：
 * send email to Yaohui Zeng at <yaohui-zeng@uiowa.edu>
