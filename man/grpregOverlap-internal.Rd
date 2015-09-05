@@ -1,4 +1,4 @@
-\name{overlap.grpreg-internal}
+\name{grpregOverlap-internal}
 \title{Internal functions}
 \alias{gamma2beta}
 \alias{incidenceMatrix}
