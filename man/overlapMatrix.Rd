@@ -13,10 +13,10 @@ overlapMatrix(X, group)
 
 \arguments{
   \item{X}{
-  The design matrix, without an intercept, as in \code{overlap.grpreg}.
+  The design matrix, without an intercept, as in \code{grpregOverlap}.
   }
   \item{group}{
-  A list of vectors containing group information, as in \code{overlap.grpreg}.
+  A list of vectors containing group information, as in \code{grpregOverlap}.
   }
 }
 
