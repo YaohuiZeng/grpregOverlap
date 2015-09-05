@@ -1,34 +1,34 @@
-\name{predict.overlap.grpreg}
-\alias{predict.overlap.grpreg}
-\alias{coef.overlap.grpreg}
-\alias{predict.cv.overlap.grpreg}
-\alias{coef.cv.overlap.grpreg}
+\name{predict.grpregOverlap}
+\alias{predict.grpregOverlap}
+\alias{coef.grpregOverlap}
+\alias{predict.cv.grpregOverlap}
+\alias{coef.cv.grpregOverlap}
 
 \title{
 Model predictions based on a fitted object
 }
 \description{
 Similar to other predict methods, this function returns predictions from a fitted 
-\code{"overlap.grpreg"} object.
+\code{"grpregOverlap"} object.
 }
 
 \usage{
-\method{predict}{overlap.grpreg}(object, X, type = c("link", "response", "class", 
+\method{predict}{grpregOverlap}(object, X, type = c("link", "response", "class", 
     "coefficients", "vars", "groups", "nvars", "ngroups", "norm"), latent = FALSE, 
     lambda, which = 1:length(object$lambda), ...)
     
-\method{predict}{cv.overlap.grpreg}(object, X, type = c("link", "response", "class", 
+\method{predict}{cv.grpregOverlap}(object, X, type = c("link", "response", "class", 
     "coefficients", "vars", "groups", "nvars", "ngroups", "norm"), latent = FALSE, 
     lambda = object$lambda.min, which=object$min, ...)
     
-\method{coef}{overlap.grpreg}(object, lambda, latent = FALSE, which=1:length(object$lambda), drop=TRUE, ...)
+\method{coef}{grpregOverlap}(object, lambda, latent = FALSE, which=1:length(object$lambda), drop=TRUE, ...)
     
-\method{coef}{cv.overlap.grpreg}(object, latent = FALSE, lambda = object$lambda.min, which = object$min, ...)
+\method{coef}{cv.grpregOverlap}(object, latent = FALSE, lambda = object$lambda.min, which = object$min, ...)
 }
 
 \arguments{
   \item{object}{
-  A fitted \code{"overlap.grpreg"} or \code{"cv.overlap.grpreg"} model object.
+  A fitted \code{"grpregOverlap"} or \code{"cv.grpregOverlap"} model object.
   }
   \item{X}{
   Matrix of values at which predictions are to be made. Not used for \code{type="coefficients"}.
@@ -49,7 +49,7 @@ Similar to other predict methods, this function returns predictions from a fitte
 }
 
 \details{
-\code{coef} and \code{predict} methods are provided for \code{"cv.overlap.grpreg"} options as a convenience. They simply call \code{coef.overlap.grpreg} and \code{predict.overlap.grpreg} with \code{lambda} set to the value that minimizes the cross-validation error.
+\code{coef} and \code{predict} methods are provided for \code{"cv.grpregOverlap"} options as a convenience. They simply call \code{coef.grpregOverlap} and \code{predict.grpregOverlap} with \code{lambda} set to the value that minimizes the cross-validation error.
 }
 
 \value{
@@ -61,7 +61,7 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
-\code{\link{overlap.grpreg}}
+\code{\link{grpregOverlap}}
 }
 
 \examples{
@@ -69,7 +69,7 @@ data(pathway.dat)
 X <- pathway.dat$expression
 group <- pathway.dat$pathways
 y <- pathway.dat$mutation
-fit <- overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+fit <- grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
 predict(fit, type = 'ngroups', lambda = 0.01)
 predict(fit, type = 'nvars', lambda = 0.01)
 predict(fit, type = 'vars', latent = TRUE, lambda = 0.01)
@@ -79,7 +79,7 @@ predict(fit, X, type = "coefficients", lambda = 0.01)
 predict(fit, type="norm", lambda=.01)
 
 \dontrun{
-cvfit <- cv.overlap.grpreg(X, y, group, penalty = 'grLasso', family = 'binomial')
+cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
 coef(cvfit)
 predict(cvfit, X, type='response')
 predict(cvfit, X, type = 'link')
