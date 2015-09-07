@@ -31,7 +31,11 @@ The following data sets are documented in the help pages:
   }
 }
 
-\author{Yaohui Zeng <yaohui-zeng@uiowa.edu>}
+\author{
+  Yaohui Zeng and Patrick Breheny
+  
+  Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
+}
 
 \references{
   \itemize{
