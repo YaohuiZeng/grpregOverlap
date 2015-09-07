@@ -51,7 +51,9 @@ Summary method for \code{cv.grpregOverlap} objects
 }
 
 \author{
-Yaohui Zeng <yaohui-zeng@uiowa.edu>
+  Yaohui Zeng and Patrick Breheny
+  
+  Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
