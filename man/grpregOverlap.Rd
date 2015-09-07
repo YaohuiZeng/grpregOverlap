@@ -5,7 +5,7 @@ Fit penalized regression models with overlapping grouped variables
 }
 
 \description{
-Fit the regularization path of linear, logistic or poisson models with 
+Fit the regularization paths of linear, logistic or poisson models with 
 overlapping grouped covariates based on the latent group lasso approach 
 (Jacob et al., 2009; Obozinski et al., 2011). Latent group MCP/SCAD as well as 
 bi-level selection methods, namely the group exponential lasso (Breheny, 2015) 
@@ -114,16 +114,15 @@ For technical details, see (Jacob et al., 2009) and (Obozinski et al., 2011).
 
 \code{grpregOverlap} takes input design matrix \code{X} and grouping information
 \code{group}, and expands {X} to the new, non-overlapping space. It then calls
-\code{grpreg} for modeling fitting based on group coordinate decent algorithm. Unlike
-in \code{grpreg}, the interface for group bridge-penalized method is not implemented
-yet, and will be adopted in later version.
+\code{grpreg} for modeling fitting based on group decent algorithm. Unlike
+in \code{grpreg}, the interface for group bridge-penalized method is not implemented.
 
 The expanded design matrix is named \code{X.latent} as a returned value in the fitted
 object. The latent coeffecient (or norm) vector then corresponds to that. Note that
-When forming \code{X.latent}, the columns in \code{X} corresponding to those variables 
+when constructing \code{X.latent}, the columns in \code{X} corresponding to those variables 
 not included in \code{group} will be removed automatically.
 
-For more detailed explanation to the penalties and algorithm, see \code{\link[grpreg]{grpreg}}.
+For more detailed explanation for the penalties and algorithm, see \code{\link[grpreg]{grpreg}}.
 }
 
 \value{
