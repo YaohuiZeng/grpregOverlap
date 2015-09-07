@@ -128,10 +128,10 @@ For technical details, see (Jacob et al., 2009) and (Obozinski et al., 2011).
 \code{grpreg} for modeling fitting based on group decent algorithm. Unlike
 in \code{grpreg}, the interface for group bridge-penalized method is not implemented.
 
-The expanded design matrix is named \code{X.latent} as a returned value in the fitted
-object. The latent coeffecient (or norm) vector then corresponds to that. Note that
-when constructing \code{X.latent}, the columns in \code{X} corresponding to those variables 
-not included in \code{group} will be removed automatically.
+The expanded design matrix is named \code{X.latent}. It is a returned value in the fitted
+object, provided \code{returnX} is TRUE. The latent coeffecient (or norm) vector then 
+corresponds to that. Note thaT when constructing \code{X.latent}, the columns in \code{X} 
+corresponding to those variables not included in \code{group} will be removed automatically.
 
 For more detailed explanation for the penalties and algorithm, see \code{\link[grpreg]{grpreg}}.
 }
