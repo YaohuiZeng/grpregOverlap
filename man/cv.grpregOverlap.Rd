@@ -55,8 +55,11 @@ The following variables are contained in the class (adopted from \code{\link[grp
 }
 
 \author{
-Yaohui Zeng <yaohui-zeng@uiowa.edu>
+  Yaohui Zeng and Patrick Breheny
+  
+  Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
+
 
 \seealso{
 \code{\link{grpregOverlap}}, \code{\link{predict.grpregOverlap}}, \code{\link[=summary.cv.grpregOverlap]{summary}}, and \code{\link[grpreg]{cv.grpreg}}.
