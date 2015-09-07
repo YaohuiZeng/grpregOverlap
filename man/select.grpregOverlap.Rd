@@ -46,7 +46,9 @@ A list containing:
 }
 
 \author{
-Yaohui Zeng <yaohui-zeng@uiowa.edu>
+  Yaohui Zeng and Patrick Breheny
+  
+  Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
