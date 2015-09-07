@@ -33,7 +33,9 @@ norms of the groups for a fitted object "grpregOverlap".
 }
 
 \author{
-Yaohui Zeng <yaohui-zeng@uiowa.edu>
+  Yaohui Zeng and Patrick Breheny
+  
+  Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \seealso{
