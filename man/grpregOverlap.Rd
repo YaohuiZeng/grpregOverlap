@@ -20,6 +20,7 @@ grpregOverlap(X, y, group,
     max.iter=1000, dfmax=ncol(X), gmax=length(group), gamma=3, tau=1/3, 
     group.multiplier={if (strtrim(penalty,2)=="gr")  sqrt(sapply(group, length)) 
                          else rep(1, length(group))}, 
+    returnX = FALSE, returnOverlap = FALSE,
     warn=TRUE, ...) 
 }
 
@@ -96,6 +97,16 @@ grpregOverlap(X, y, group,
   of group size for the group selection methods, and a vector of 1's (i.e., no 
   adjustment for group size) for bi-level selection.
   }
+  \item{returnX}{
+  Return the new expanded design matrix? Default is FALSE. Note the storage size 
+  of this new matrix can be very large.
+  }
+  \item{returnOverlap}{
+  Return the matrix containing overlapps? Default is FALSE. It is a square matrix
+  \eqn{C} such that \eqn{C[i, j]} is the number of overlapped variables between 
+  group i and j. Diagonal value \eqn{C[i, i]} is therefore the number of 
+  variables in group i.
+  }
   \item{warn}{
   Should the function give a warning if it fails to converge?  Default is TRUE.  
   See \code{\link[grpreg]{grpreg}} for more details.
@@ -171,11 +182,12 @@ with following variables.
   \item{overlap.mat}{
   A square matrix \eqn{C} where \eqn{C[i, j]} is the number of overlapped 
   variables between group i and j. Diagonal value \eqn{C[i, i]} is therefore the 
-  number of variables in group i.
+  number of variables in group i. Only returned if \code{returnOverlap} is TRUE.
   }
   \item{X.latent}{
   The new expanded design matrix for the latent group lasso formulation. The
-  variables are reordered according to the order of groups.
+  variables are reordered according to the order of groups. Only returned if
+  \code{returnX} is TRUE.
   }
 }
 \references{

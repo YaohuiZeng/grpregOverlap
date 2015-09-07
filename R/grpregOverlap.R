@@ -1,16 +1,17 @@
 ## function: overlapping group selection based on R Package 'grpreg' 
 # ------------------------------------------------------------------------------
 grpregOverlap <- function(X, y, group, 
-                           penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
-                                     "cMCP", "gLasso", "gMCP"), 
-                           family=c("gaussian","binomial", "poisson"), 
-                           nlambda=100, lambda, 
-                           lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},
-                           alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
-                           gmax=length(group), gamma=3, tau=1/3, 
-                           group.multiplier={if (strtrim(penalty,2)=="gr") 
+                          penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
+                                    "cMCP", "gLasso", "gMCP"), 
+                          family=c("gaussian","binomial", "poisson"), 
+                          nlambda=100, lambda, 
+                          lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},
+                          alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
+                          gmax=length(group), gamma=3, tau=1/3, 
+                          group.multiplier={if (strtrim(penalty,2)=="gr") 
                              sqrt(sapply(group, length)) else rep(1, length(group))}, 
-                           warn=TRUE, ...) {
+                          returnX = FALSE, returnOverlap = FALSE,
+                          warn=TRUE, ...) {
   # Error checking
   if (class(X) != "matrix") {
     tmp <- try(X <- as.matrix(X), silent=TRUE)
@@ -19,7 +20,7 @@ grpregOverlap <- function(X, y, group,
     }   
   }
   if (storage.mode(X)=="integer") X <- 1.0*X
-
+  
   incid.mat <- incidenceMatrix(X, group) # group membership incidence matrix
   over.mat <- over.temp <- Matrix(incid.mat %*% t(incid.mat)) # overlap matrix
   grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector
@@ -42,8 +43,12 @@ grpregOverlap <- function(X, y, group,
   fit$incidence.mat <- incid.mat
   fit$group <- group
   fit$grp.vec <- grp.vec # this is 'group' argument in Package 'grpreg'
-  fit$X.latent <- X.latent
-  fit$overlap.mat <- over.mat
+  if (returnX) {
+    fit$X.latent <- X.latent
+  } 
+  if (returnOverlap) {
+    fit$overlap.mat <- over.mat
+  }
   # get results, store in new class 'grpregOverlap', and inherited from 'grpreg'
   val <- structure(fit,
                    class = c('grpregOverlap', 'grpreg'))
