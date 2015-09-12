@@ -2,10 +2,10 @@ Package: grpregOverlap
 Type: Package
 Title: Penalized Regression Models with Overlapping Grouped Covariates 
 Version: 1.0-1
-Date: 2015-05-24
+Date: 2015-09-12
 Author: Yaohui Zeng, Patrick Breheny
 Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
-Depends: R (>= 2.13.0), Matrix, grpreg
+Depends: R (>= 3.1.0), Matrix, grpreg
 LazyData: true
 Description: Fit the regularization path of linear, logistic or poisson models with 
 	overlapping grouped covariates based on the latent group lasso approach. Latent 
