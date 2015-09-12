@@ -26,7 +26,7 @@ test_that('group information, correct?', {
   group <- list(c('a', 'b', 'c'), c('d', 'e', 'f'), c('g', 'h'), c('i'), 
                 c('j', 'k'), c('l'), c('m'), c('n', 'o', 'p'))
   expect_that(overlapMatrix(X, group), 
-              throws_error("The names of variables in X don't match with names in group"))
+              throws_error("The names of variables in X don't match with names in group!"))
   
   group <- list(c(1, 2, 3, 7), c(4, 5, 6), c(7, 8, 10), c(7, 10, 11), c(6, 14, 15, 16))
   ## create new groups for variables 9, 12, 13, put them at bottom
