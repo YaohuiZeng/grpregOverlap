@@ -5,7 +5,7 @@
 # ------------------------------------------------------------------------------
 overlapMatrix <- function(X, group) {
   inc.mat <- incidenceMatrix(X, group)
-  over.mat <- Matrix(inc.mat %*% t(inc.mat))
+  over.mat <- Matrix(inc.mat %*% t(inc.mat), sparse = TRUE, dimnames = dimnames(inc.mat))
   over.mat
 }
 # ------------------------------------------------------------------------------
