@@ -42,7 +42,7 @@ incidenceMatrix <- function(X, group) {
       colnames(grp.mat)[ind] <- colnames(X)[ind]
     }
   }
-  rownames(grp.mat) <- names(group)
+  rownames(grp.mat) <- as.character(names(group))
   # check grp.mat
   if (all(grp.mat == 0)) {
     stop("The names of variables in X don't match with names in group!")
