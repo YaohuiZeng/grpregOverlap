@@ -19,8 +19,9 @@ incidenceMatrix <- function(X, group) {
     stop("Argument 'group' must be a list of integer indices or character names of variables!")
   }
   J <- length(group)
-  grp.mat <- Matrix(0, nrow = J, ncol = p, dimnames=list(as.character(rep(NA, J)),
-                                                         as.character(rep(NA, p))))    
+  grp.mat <- Matrix(0, nrow = J, ncol = p, sparse = TRUE, 
+                    dimnames=list(as.character(rep(NA, J)),
+                                  as.character(rep(NA, p))))    
   if(is.null(colnames(X))) {
     colnames(X) <- paste("V", 1:ncol(X), sep="")    
   }
