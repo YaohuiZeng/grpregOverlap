@@ -32,6 +32,17 @@ grpregOverlap <- function(X, y, group,
     cat("      Now conducting non-overlapping group selection ...")
   }
   
+  ## Improvement 1 (9/17/2015): Handle situation where variables listed in groups NOT IN X !
+  ## This case is possible in pathway selection, where not all genes in some pathways have expression data recorded. 
+  ## The exsiting code can already handle this in the sense that those genes not in X 
+  ## will not be included the expanded design matrix, except that the group.multiplier vector
+  ## needs to be updated with the actual group size (i.e., the size after removing those non-exsiting genes).
+  penalty <- match.arg(penalty)
+  if (strtrim(penalty,2)=="gr" && !all(sqrt(sapply(group, length)), diag(over.mat))) {
+  ## BUT this overwrites the user-specified group multiplier, need fix later!!
+    group.multiplier <- diag(over.mat)
+  }
+
   fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
                 family=family, nlambda=nlambda, lambda=lambda, 
                 lambda.min=lambda.min, alpha=alpha, eps=eps, 
