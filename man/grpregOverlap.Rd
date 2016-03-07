@@ -18,8 +18,7 @@ grpregOverlap(X, y, group,
     family=c("gaussian","binomial", "poisson"), nlambda=100, lambda, 
     lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05}, alpha=1, eps=.001, 
     max.iter=1000, dfmax=ncol(X), gmax=length(group), gamma=3, tau=1/3, 
-    group.multiplier={if (strtrim(penalty,2)=="gr")  sqrt(sapply(group, length)) 
-                         else rep(1, length(group))}, 
+    group.multiplier, 
     returnX = FALSE, returnOverlap = FALSE,
     warn=TRUE, ...) 
 }
@@ -68,7 +67,8 @@ grpregOverlap(X, y, group,
   of the group penalty is \code{lambda*alpha}, while that of the ridge penalty is
   \code{lambda*(1-alpha)}. Default is 1: no L2 penalty.
   }
-  \item{eps}{Convergence threshhold.  The algorithm iterates until the change (on the standardized scale) in any coefficient is less than \code{eps}. Default is \code{.001}.
+  \item{eps}{Convergence threshhold.  The algorithm iterates until the change (on 
+  the standardized scale) in any coefficient is less than \code{eps}. Default is \code{.001}.
   }
   \item{max.iter}{
   The maximum number of iterations. Default is 1000. See \code{\link[grpreg]{grpreg}} 
@@ -93,9 +93,10 @@ grpregOverlap(X, y, group,
   \item{group.multiplier}{
   A vector of values representing multiplicative factors by which each group's 
   penalty is to be multiplied. Often, this is a function (such as the square root) 
-  of the number of predictors in each group. The default is to use the square root 
-  of group size for the group selection methods, and a vector of 1's (i.e., no 
-  adjustment for group size) for bi-level selection.
+  of the number of predictors in each group. If this is not specified by the user,
+  the internal code will, by default, use the square root of group size for the 
+  group selection methods, and a vector of 1's (i.e., no adjustment for group size) 
+  for bi-level selection.
   }
   \item{returnX}{
   Return the new expanded design matrix? Default is FALSE. Note the storage size 

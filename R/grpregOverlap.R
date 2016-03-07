@@ -8,8 +8,7 @@ grpregOverlap <- function(X, y, group,
                           lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},
                           alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
                           gmax=length(group), gamma=3, tau=1/3, 
-                          group.multiplier={if (strtrim(penalty,2)=="gr") 
-                             sqrt(sapply(group, length)) else rep(1, length(group))}, 
+                          group.multiplier, 
                           returnX = FALSE, returnOverlap = FALSE,
                           warn=TRUE, ...) {
   # Error checking
@@ -36,13 +35,21 @@ grpregOverlap <- function(X, y, group,
   ## This case is possible in pathway selection, where not all genes in some pathways have expression data recorded. 
   ## The exsiting code can already handle this in the sense that those genes not in X 
   ## will not be included the expanded design matrix, except that the group.multiplier vector
-  ## needs to be updated with the actual group size (i.e., the size after removing those non-exsiting genes).
+  ## needs to be updated with the actual group size (i.e., the size after removing those non-exsiting genes), which can be done using "over.mat".
+  
+  ## Improvement 2 (3/7/2016): Handle cases where variables in X don't match at 
+  ##    all variables in a group, i.e., cases where diag(over.mat) has zero cells.
+  gs <- diag(over.mat)
+  gs <- gs[gs != 0]  
+  
   penalty <- match.arg(penalty)
-  if (strtrim(penalty,2)=="gr" && !all(sqrt(sapply(group, length)), diag(over.mat))) {
-  ## BUT this overwrites the user-specified group multiplier, need fix later!!
-    group.multiplier <- diag(over.mat)
+  if (missing(group.multiplier)) {
+    if (strtrim(penalty,2)=="gr") {
+      group.multiplier <- sqrt(gs)
+    } else {
+      group.multiplier <- rep(1, length(group))
+    }
   }
-
   fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
                 family=family, nlambda=nlambda, lambda=lambda, 
                 lambda.min=lambda.min, alpha=alpha, eps=eps, 
