@@ -228,14 +228,14 @@ y <- X.latent \%*\% beta.latent.T + rnorm(100)
 fit <- grpregOverlap(X, y, group, penalty = 'grLasso')
 # fit <- grpregOverlap(X, y, group, penalty = 'grMCP')
 # fit <- grpregOverlap(X, y, group, penalty = 'grSCAD')
-coef(fit, latent = TRUE) # compare to beta.latent.T
+head(coef(fit, latent = TRUE)) # compare to beta.latent.T
 plot(fit, latent = TRUE) 
-coef(fit, latent = FALSE) # compare to beta.T
+head(coef(fit, latent = FALSE)) # compare to beta.T
 plot(fit, latent = FALSE)
 
 cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grMCP')
 plot(cvfit)
-coef(cvfit)
+head(coef(cvfit))
 summary(cvfit)
 
 ## logistic regression, real data, pathway selection
@@ -245,8 +245,8 @@ group <- pathway.dat$pathways
 y <- pathway.dat$mutation
 fit <- grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
 plot(fit)
-select(fit)
-select(fit,criterion="AIC",df="active")
+str(select(fit))
+str(select(fit,criterion="AIC",df="active"))
 
 \dontrun{
 cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
