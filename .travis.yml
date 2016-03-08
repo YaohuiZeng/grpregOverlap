@@ -4,6 +4,8 @@ language: r
 warnings_are_errors: true
 sudo: required
 
+r_build_args: --resave-data
+
 env:
  global:
    - CRAN: http://cran.rstudio.com
