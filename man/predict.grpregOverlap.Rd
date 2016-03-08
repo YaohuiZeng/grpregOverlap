@@ -82,7 +82,7 @@ predict(fit, type="norm", lambda=.01)
 
 \dontrun{
 cvfit <- cv.grpregOverlap(X, y, group, penalty = 'grLasso', family = 'binomial')
-coef(cvfit)
+head(coef(cvfit))
 predict(cvfit, X, type='response')
 predict(cvfit, X, type = 'link')
 predict(cvfit, X, type = 'class')
