@@ -25,7 +25,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   
   # equivalent to fit 'grpreg'
   fit2 <- grpreg(X, y, group2, penalty = 'grLasso')
-  expect_identical(fit$beta, fit2$beta)
+  expect_equal(fit$beta, fit2$beta)
   expect_equal(all(fit2$beta == fit$beta.latent), TRUE)
   
   ## logistic regression
@@ -42,7 +42,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   
   # equivalent to fit 'grpreg'
   fit2 <- grpreg(X, y, group2, penalty = 'grLasso', family = 'binomial')
-  expect_identical(fit$beta, fit2$beta)
+  expect_equal(fit$beta, fit2$beta)
   expect_equal(all(fit2$beta == fit$beta.latent), TRUE)
   
   ## logistic regression
@@ -59,7 +59,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   
   # equivalent to fit 'grpreg'
   fit2 <- grpreg(X, y, group2, penalty = 'grLasso', family = 'binomial')
-  expect_identical(fit$beta, fit2$beta)
+  expect_equal(fit$beta, fit2$beta)
   expect_equal(all(fit2$beta == fit$beta.latent), TRUE)
 })
 
