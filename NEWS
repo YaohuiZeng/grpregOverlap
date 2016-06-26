@@ -1,0 +1,10 @@
+*   Minor change
+**  Major change
+
+2.0-1
+  ** "grpregOverlap" now works for survival analysis (Cox model) if specifying
+      "family = cox". Related methods for survival analysis, like 
+      cv.grpsurvOverlap, predict.grpsurvOverlap, are added. The generic functions,
+      like plot, summary, predict can also handle survival model fitting and
+      cross-validation.
+	*  Handle cases where variables in X are not included in "group" input.

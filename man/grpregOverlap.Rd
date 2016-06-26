@@ -15,9 +15,10 @@ and the composite MCP (Huang et al., 2012) are also available.
 \usage{
 grpregOverlap(X, y, group, 
     penalty=c("grLasso", "grMCP", "grSCAD", "gel", "cMCP", "gLasso", "gMCP"), 
-    family=c("gaussian","binomial", "poisson"), nlambda=100, lambda, 
+    family=c("gaussian","binomial", "poisson", "cox"), nlambda=100, lambda, 
     lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05}, alpha=1, eps=.001, 
-    max.iter=1000, dfmax=ncol(X), gmax=length(group), gamma=3, tau=1/3, 
+    max.iter=1000, dfmax=ncol(X), gmax=length(group), 
+    gamma=ifelse(penalty == "grSCAD", 4, 3), tau=1/3, 
     group.multiplier, 
     returnX = FALSE, returnOverlap = FALSE,
     warn=TRUE, ...) 

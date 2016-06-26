@@ -2,9 +2,13 @@
 # ------------------------------------------------------------------------------
 summary.cv.grpregOverlap <- function(object, ...) {
     obj.new <- object
-    class(obj.new) <- 'cv.grpreg'
+    if (object$fit$family != 'cox') {
+      class(obj.new) <- 'cv.grpreg'
+    } else {
+      class(obj.new) <- 'cv.grpsurv'
+    }
     res <- summary(obj.new, ...)
-    
+   
     nvars.latent <- predict(object$fit, type="nvars", latent = T)
     res$nvars.latent <- nvars.latent
     d.latent <- dim(object$fit$beta.latent)

@@ -44,7 +44,7 @@ test_that("Non-overlapping fit againt grpreg:", {
   fit2 <- grpreg(X, y, group2, penalty = 'grLasso', family = 'binomial')
   expect_identical(fit$beta, fit2$beta)
   expect_equal(all(fit2$beta == fit$beta.latent), TRUE)
-  
+ 
   ## logistic regression
   y <- birthwt.grpreg$low
   invisible(capture.output({
@@ -119,10 +119,12 @@ test_that("predict, coef, select, cv, against grpreg: ", {
   
   invisible(capture.output({
     cvfit <- cv.grpregOverlap(X, y, group, family="binomial", penalty="grMCP", 
-                               seed = 1234)
+                              nfolds = 2, seed = 1234)
   }))
   
-  cvfit2 <- cv.grpreg(X, y, group2, family="binomial", penalty="grMCP", 
+  cvfit2 <- cv.grpreg(X, y, group2, family="binomial",
+                      penalty="grMCP", 
+                      nfolds = 2, 
                       seed = 1234)
   expect_equal(all(coef(cvfit) == coef(cvfit2)), TRUE)
   expect_equal(all(predict(cvfit, X) == predict(cvfit2, X)), TRUE)
@@ -147,7 +149,7 @@ test_that("predict, coef, select, cv, against grpreg: ", {
      ),TRUE)  
   )  
 })
-# 
+
 # test_that("Overlapping fit: ", {
 #   
 #   ## linear regression, a simulation demo.

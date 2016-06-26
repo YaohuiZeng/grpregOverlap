@@ -4,7 +4,7 @@
 \alias{incidenceMatrix}
 \description{Internal functions in the package.}
 \usage{
-gamma2beta(gamma, incidence.mat, grp.vec) 
+gamma2beta(gamma, incidence.mat, grp.vec, family) 
 incidenceMatrix(X, group) 
 }
 \author{

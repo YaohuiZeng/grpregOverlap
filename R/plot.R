@@ -3,25 +3,47 @@
 # ------------------------------------------------------------------------------
 plot.grpregOverlap <- function(x, legend.loc, alpha=1, latent = TRUE, 
                                 log.l = FALSE, norm = FALSE, ...) {
+  if (x$family == 'cox') {
+    surv <- TRUE
+  } else {
+    surv <- FALSE
+  }
+
   if (norm) {
     Y <- predict(x, type="norm", latent = TRUE)
-    if (any(x$grp.vec==0)) Y <- Y[-1,] ## will implement this later
+    # if (any(x$grp.vec==0)) Y <- Y[-1,] ## will implement this later
     nonzero <- which(apply(abs(Y), 1, sum)!=0)
     Y <- Y[nonzero,]
     g <- 1:nrow(Y)
   } else {
     if (length(dim(x$beta))==3) {
       if (latent) {
-        beta <- matrix(x$beta.latent[,-1,,drop=FALSE], 
-                       ncol=dim(x$beta.latent)[3])
+        if (surv) {
+          beta <- matrix(x$beta.latent, ncol=dim(x$beta.latent)[3])
+        } else {
+          beta <- matrix(x$beta.latent[,-1,,drop=FALSE], 
+                         ncol=dim(x$beta.latent)[3])
+        }
       } else {
-        beta <- matrix(x$beta[,-1,,drop=FALSE], ncol=dim(x$beta)[3])
+        if (surv) {
+          beta <- matrix(x$beta, ncol=dim(x$beta)[3])
+        } else {
+          beta <- matrix(x$beta[,-1,,drop=FALSE], ncol=dim(x$beta)[3])
+        }
       }
     } else {
       if (latent) {
-        beta <- x$beta.latent[-1,,drop=FALSE]
+        if (surv) {
+          beta <- x$beta.latent
+        } else {
+          beta <- x$beta.latent[-1,,drop=FALSE]
+        }
       } else {
-        beta <- x$beta[-1,,drop=FALSE]
+        if (surv) {
+          beta <- x$beta
+        } else {
+          beta <- x$beta[-1,,drop=FALSE]
+        }
       }
     }
     penalized <- which(x$grp.vec != 0)
@@ -33,7 +55,7 @@ plot.grpregOverlap <- function(x, legend.loc, alpha=1, latent = TRUE,
   p <- nrow(Y)
   l <- x$lambda
   n.g <- max(g)
-  
+
   if (log.l) {
     l <- log(l)
     xlab <- expression(log(lambda))

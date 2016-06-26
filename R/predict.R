@@ -6,6 +6,7 @@ predict.grpregOverlap <- function(object, X,
                                           "nvars", "ngroups", "norm"), 
                                    latent = FALSE, lambda, 
                                    which=1:length(object$lambda), ...) {
+  family <- object$family
   if (!missing(X) && class(X)=="character") {
     type <- X
     X <- NULL
@@ -15,9 +16,19 @@ predict.grpregOverlap <- function(object, X,
                which=which, drop = FALSE, ...)
   if (type == 'coefficients') return(beta)
   if (length(dim(object$beta)) == 2) {
-    if (type=="vars") return(drop(apply(beta[-1, , drop=FALSE]!=0, 2, FUN=which)))
+    if (type=="vars") {
+      if (family != 'cox') {
+        return(drop(apply(beta[-1, , drop=FALSE]!=0, 2, FUN=which)))
+      } else {
+        return(drop(apply(beta != 0, 2, FUN=which)))
+      }
+    }
     if (type=="nvars") {
-      v <- drop(apply(beta[-1, , drop=FALSE]!=0, 2, FUN=which))
+      if (family != 'cox') {
+        v <- drop(apply(beta[-1, , drop=FALSE]!=0, 2, FUN=which))
+      } else {
+        v <- drop(apply(beta != 0, 2, FUN=which))
+      }
       if (class(v)=="list") {
         res <- sapply(v, length)
       } else {
@@ -31,8 +42,12 @@ predict.grpregOverlap <- function(object, X,
       if (!latent) {
         cat("The returned is the L2 norm of the latent coefficients! Set latent = 'TRUE' to avoid this warning message.\n\n")
       } 
-      return(drop(apply(beta[-1, , drop=FALSE], 2, 
-                        function(x) tapply(x, object$grp.vec, function(x){sqrt(sum(x^2))}))))
+      if (family != 'cox') {
+        return(drop(apply(beta[-1, , drop=FALSE], 2, 
+                          function(x) tapply(x, object$grp.vec, function(x){sqrt(sum(x^2))}))))
+      } else {
+        return(drop(apply(beta, 2, function(x) tapply(x, object$grp.vec, function(x){sqrt(sum(x^2))}))))
+      }
     }
   } else {
     if (type=="vars") 
@@ -46,7 +61,11 @@ predict.grpregOverlap <- function(object, X,
       if (!latent) {
         cat("The returned is the L2 norm of the latent coefficients. Set latent = 'TRUE' to avoid this warning message.\n\n")
       } 
-      return(drop(apply(beta[, -1, , drop=FALSE], 3, function(x) apply(x, 2, function(x){sqrt(sum(x^2))})))) 
+      if (family != 'cox') {
+        return(drop(apply(beta[, -1, , drop=FALSE], 3, function(x) apply(x, 2, function(x){sqrt(sum(x^2))})))) 
+      } else {
+        return(drop(apply(beta, 3, function(x) apply(x, 2, function(x){sqrt(sum(x^2))})))) 
+      }
     }
   }
   if (!missing(X) && !is.null(X)) {
@@ -58,7 +77,11 @@ predict.grpregOverlap <- function(object, X,
   obj.new <- object
   obj.new$group <- object$grp.vec
   obj.new$beta <- object$beta.latent
-  class(obj.new) <- 'grpreg'
+  if (family != 'cox') {
+    class(obj.new) <- 'grpreg'
+  } else {
+    class(obj.new) <- 'grpsurv'
+  }
   return(predict(obj.new, X=X, type=type, lambda=lambda, which=which, ...))
 }
 # -------------------------------------------------------------------------------
@@ -66,17 +89,18 @@ predict.grpregOverlap <- function(object, X,
 ## function: coef.grpregOverlap, coef for grpregOverlap
 # -------------------------------------------------------------------------------
 coef.grpregOverlap <- function(object, lambda, latent = FALSE, 
-                                which=1:length(object$lambda), drop=TRUE, ...) {
+                               which=1:length(object$lambda), drop=TRUE, ...) {
+  family <- object$family
   obj.new <- object
   obj.new$beta <- object$beta.latent
   class(obj.new) <- 'grpreg'
-  
+
   ## latent beta
   beta <- coef(object = obj.new, lambda = lambda, 
-               which = which, drop=FALSE, ...)        
+               which = which, drop=FALSE, ...)  
   if (!latent) {
     beta <- gamma2beta(beta, incidence.mat = object$incidence.mat, 
-                       grp.vec = object$grp.vec)
+                       grp.vec = object$grp.vec, family = family)
   }
   if (drop) return(drop(beta)) else return(beta)
 }
