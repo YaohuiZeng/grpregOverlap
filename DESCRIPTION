@@ -1,7 +1,7 @@
 Package: grpregOverlap
 Type: Package
 Title: Penalized Regression Models with Overlapping Grouped Covariates 
-Version: 2.0-1
+Version: 2.1-0
 Date: 2016-06-28
 Author: Yaohui Zeng, Patrick Breheny
 Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
