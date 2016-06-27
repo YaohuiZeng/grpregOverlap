@@ -5,7 +5,7 @@ Fit penalized regression models with overlapping grouped variables
 }
 
 \description{
-Fit the regularization paths of linear, logistic or poisson models with 
+Fit the regularization paths of linear, logistic, Poisson or Cox models with 
 overlapping grouped covariates based on the latent group lasso approach 
 (Jacob et al., 2009; Obozinski et al., 2011). Latent group MCP/SCAD as well as 
 bi-level selection methods, namely the group exponential lasso (Breheny, 2015) 
@@ -30,8 +30,11 @@ grpregOverlap(X, y, group,
   \code{grpreg}, which standardizes the data and includes an intercept by default.
   }
   \item{y}{
-  The response vector, or a matrix in the case of multitask learning. See 
-  \code{\link[grpreg]{grpreg}} for more details.
+  The response vector, or a matrix in the case of multitask learning. For survival analysis, \code{y} is the time-to-event outcome - a two-column matrix or
+    \code{\link[survival]{Surv}} object.  The first column is the
+    time on study (follow up time); the second column is a binary
+    variable with 1 indicating that the event has occurred and 0
+    indicating (right) censoring. See \code{\link[grpreg]{grpreg}} and  \code{\link[grpreg]{grpsurv}} for more details.
   }
   \item{group}{
   Different from that in \code{grpreg}, \code{group} here must be a list of vectors,
@@ -45,8 +48,8 @@ grpregOverlap(X, y, group,
   variables in those groups. See \code{\link[grpreg]{grpreg}} for more details.
   }
   \item{family}{
-  Either "gaussian", "binomial", or 'poisson', depending on the response. If 
-  \code{family} is missing, it is set to be 'gaussian'.
+  Either "gaussian", "binomial", or 'cox', depending on the response. If 
+  \code{family} is missing, it is set to be 'gaussian'. Specify \code{family} = 'cox' for survival analysis (Cox models).
   }
   \item{nlambda}{
   The number of \code{lambda} values. Default is 100.
@@ -139,7 +142,7 @@ For more detailed explanation for the penalties and algorithm, see \code{\link[g
 }
 
 \value{
-An object with S3 class \code{"grpregOverlap"}, which inherits \code{"grpreg"}, 
+An object with S3 class \code{"grpregOverlap"} or \code{"grpsurvOverlap"} (for Cox models), which inherits \code{"grpreg"}, 
 with following variables.
   \item{beta}{
   The fitted matrix of coefficients. The number of rows is equal to the number 
@@ -153,8 +156,7 @@ with following variables.
   \item{alpha}{Same as above.}
   \item{loss}{
   A vector containing either the residual sum of squares (\code{"gaussian"}) or 
-  negative log-likelihood (\code{"binomial"}) of the fitted model at each value 
-  of \code{lambda}.}
+  negative log-likelihood (\code{"binomial"}) or negative partial log-likelihood (\code{"cox"}) of the fitted model at each value of \code{lambda}.}
   \item{n}{Number of observations.}
   \item{penalty}{Same as above.}
   \item{df}{
@@ -191,6 +193,10 @@ with following variables.
   variables are reordered according to the order of groups. Only returned if
   \code{returnX} is TRUE.
   }
+  \item{W}{Matrix of \code{exp(beta)} values for each subject over all
+    \code{lambda} values. (For Cox models only)}
+  \item{time}{Times on study. (For Cox models only)}
+  \item{fail}{Failure event indicator. (For Cox models only)}
 }
 \references{
   \itemize{
@@ -211,8 +217,8 @@ with following variables.
 }
 
 \seealso{
-\code{\link{cv.grpregOverlap}}, \code{\link[=plot.grpregOverlap]{plot}}, 
-\code{\link[=select.grpregOverlap]{select}}, and \code{\link[grpreg]{grpreg}}.
+\code{\link{cv.grpregOverlap}}, \code{\link{cv.grpsurvOverlap}}, \code{\link[=plot.grpregOverlap]{plot}}, 
+\code{\link[=select.grpregOverlap]{select}}, \code{\link[grpreg]{grpreg}}, \code{\link[grpreg]{grpsurv}}.
 }
 
 \examples{
