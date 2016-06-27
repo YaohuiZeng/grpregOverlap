@@ -3,8 +3,8 @@
 
 # grpregOverlap
 
-`grpregOverlap` fits the regularization paths of linear, logistic or poisson 
-models with overlapping grouped covariates based on the latent group lasso 
+`grpregOverlap` fits the regularization paths of linear, logistic, Poisson, 
+or Cox models with overlapping grouped covariates based on the latent group lasso 
 approach (Jacob et al., 2009). Latent group MCP/SCAD as well as bi-level 
 selection methods, namely the group exponential lasso(Breheny, 2015) and the 
 composite MCP (Huang et al., 2012) are also available. This package serves as 
