@@ -21,6 +21,7 @@ Adoptted from \code{\link[grpreg]{predict.grpsurv}}:
   \item{X}{Matrix of values at which predictions are to be made.  Not
     used for \code{type="coefficients"} or for some of the \code{type}
     settings in \code{predict}.}
+  \item{latent}{Should plot the paths of latent coefficients? Default is TRUE. Note \eqn{\hat{\gamma}} is used as the label of y axis to represent latent coefficient vector.}
   \item{lambda}{Values of the regularization parameter \code{lambda} at
     which predictions are requested.  For values of \code{lambda} not in
     the sequence of fitted models, linear interpolation is used.}
