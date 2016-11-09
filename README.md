@@ -1,7 +1,8 @@
-[![Build Status](https://travis-ci.org/YaohuiZeng/grpregOverlap.svg?branch=master)](https://travis-ci.org/YaohuiZeng/grpregOverlap)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/grpregOverlap)](http://cran.r-project.org/package=grpregOverlap)
 
 # grpregOverlap
+[![Build Status](https://travis-ci.org/YaohuiZeng/grpregOverlap.svg?branch=master)](https://travis-ci.org/YaohuiZeng/grpregOverlap)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/grpregOverlap)](http://cran.r-project.org/package=grpregOverlap)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/grpregOverlap)](http://www.r-pkg.org/pkg/grpregOverlap)
 
 `grpregOverlap` fits the regularization paths of linear, logistic, Poisson, 
 or Cox models with overlapping grouped covariates based on the latent group lasso 
@@ -11,8 +12,9 @@ composite MCP (Huang et al., 2012) are also available. This package serves as
 an extension of R package `grpreg` (by Dr. Patrick Breheny <patrick-breheny@uiowa.edu>) 
 for grouped variable selection involving overlaps between groups.
 
-To install:
-* the latest version (requires devtools): install_github("YaohuiZeng/grpregOverlap")
+## Installation:
+* the stable version: `install.packages("grpregOverlap")`
+* the latest version: `devtools::install_github("YaohuiZeng/grpregOverlap")`
 
-To report bugs：
-* send email to Yaohui Zeng at <yaohui-zeng@uiowa.edu>
+## Report bugs：
+* open an [issue](https://github.com/YaohuiZeng/grpregOverlap/issues) or send an email to Yaohui Zeng at <yaohui-zeng@uiowa.edu>
