@@ -49,7 +49,7 @@ The following variables are contained in the class (adopted from \code{\link[grp
 
 \references{
   \itemize{
-  \item Breheny P (2014). R package 'grpreg'. \url{http://cran.r-project.org/web/packages/grpreg/grpreg.pdf}
+  \item Breheny P (2014). R package 'grpreg'. \url{https://CRAN.R-project.org/package=grpreg/grpreg.pdf}
   }
 }
 

@@ -1,7 +1,7 @@
 
 # grpregOverlap
 [![Build Status](https://travis-ci.org/YaohuiZeng/grpregOverlap.svg?branch=master)](https://travis-ci.org/YaohuiZeng/grpregOverlap)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/grpregOverlap)](http://cran.r-project.org/package=grpregOverlap)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/grpregOverlap)](https://CRAN.R-project.org/package=grpregOverlap)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/grpregOverlap)](http://www.r-pkg.org/pkg/grpregOverlap)
 
 `grpregOverlap` fits the regularization paths of linear, logistic, Poisson, 

@@ -46,7 +46,7 @@ Summary method for \code{cv.grpregOverlap} objects
 
 \references{
   \itemize{
-  \item Breheny P (2014). R package 'grpreg'. \url{http://cran.r-project.org/web/packages/grpreg/grpreg.pdf}
+  \item Breheny P (2014). R package 'grpreg'. \url{https://CRAN.R-project.org/package=grpreg/grpreg.pdf}
   }
 }
 
