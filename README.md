@@ -12,6 +12,10 @@ composite MCP (Huang et al., 2012) are also available. This package serves as
 an extension of R package `grpreg` (by Dr. Patrick Breheny <patrick-breheny@uiowa.edu>) 
 for grouped variable selection involving overlaps between groups.
 
+## News:
+* this package now works for survival analysis (Cox model) by specifying "family = cox". 
+* this package on GitHub has been updated to Version 2.1-1. See details in NEWS.
+
 ## Installation:
 * the stable version: `install.packages("grpregOverlap")`
 * the latest version: `devtools::install_github("YaohuiZeng/grpregOverlap")`
