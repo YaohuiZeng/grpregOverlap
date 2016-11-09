@@ -5,7 +5,7 @@ Version: 2.1-1
 Date: 2016-11-08
 Author: Yaohui Zeng, Patrick Breheny
 Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
-Depends: R (>= 3.1.0), Matrix, grpreg (>=3.0-2)
+Depends: R (>= 3.1.0), Matrix, grpreg (>= 3.0-2)
 LazyData: true
 Description: Fit the regularization path of linear, logistic or Cox models with 
 	overlapping grouped covariates based on the latent group lasso approach. Latent 
