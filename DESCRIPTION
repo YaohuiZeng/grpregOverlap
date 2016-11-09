@@ -5,6 +5,8 @@ Version: 2.1-1
 Date: 2016-11-08
 Author: Yaohui Zeng, Patrick Breheny
 Maintainer: Yaohui Zeng <yaohui-zeng@uiowa.edu>
+URL: https://github.com/YaohuiZeng/grpregOverlap
+BugReports: https://github.com/YaohuiZeng/grpregOverlap/issues
 Depends: R (>= 3.1.0), Matrix, grpreg (>= 3.0-2)
 LazyData: true
 Description: Fit the regularization path of linear, logistic or Cox models with 
