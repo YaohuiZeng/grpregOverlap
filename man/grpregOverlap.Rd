@@ -200,7 +200,7 @@ with following variables.
 }
 \references{
   \itemize{
-    \item Zeng, Y., and Breheny, P. (2016). Overlapping Group Logistic Regression with Applications to Genetic Pathway Selection. \emph{Cancer Informatics}, \strong{15}, 179–187. \url{https://arxiv.org/abs/1510.05144} 
+    \item Zeng, Y., and Breheny, P. (2016). Overlapping Group Logistic Regression with Applications to Genetic Pathway Selection. \emph{Cancer Informatics}, \strong{15}, 179-187. \url{https://arxiv.org/abs/1510.05144} 
     \item Jacob, L., Obozinski, G., and Vert, J. P. (2009, June). Group lasso with overlap and graph lasso. \emph{In Proceedings of the 26th annual international conference on machine learning, ACM}: 433-440. \url{http://www.machinelearning.org/archive/icml2009/papers/471.pdf}
     \item Obozinski, G., Jacob, L., and Vert, J. P. (2011). Group lasso with overlaps: the latent group lasso approach. \url{http://arxiv.org/abs/1110.0413}.
     \item Breheny, P. and Huang, J. (2009) Penalized methods for bi-level variable selection.  \emph{Statistics and its interface}, \strong{2}: 369-380. \url{http://myweb.uiowa.edu/pbreheny/publications/Breheny2009.pdf}

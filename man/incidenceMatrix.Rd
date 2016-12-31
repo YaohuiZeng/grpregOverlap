@@ -19,6 +19,7 @@ incidenceMatrix(X, group)
   A list of vectors containing group information, as in \code{grpregOverlap}.
 }
 }
+
 \details{
 This function is intended to provide an interface for users to construct the so-called 
 incidence matrix, denoted as \code{M}, with dimension p-by-J, where \code{p} is the number of variables, and \code{J} is the number of groups. If variable \code{i} is contained by group
@@ -27,6 +28,7 @@ incidence matrix, denoted as \code{M}, with dimension p-by-J, where \code{p} is 
 Note that since a variable can be contained by multiple groups, so the sum of row \code{M[i, ]}
 can be larger than 1.
 }
+
 \value{
 A sparse \code{p-by-J} matrix as described above.
 }
@@ -37,10 +39,6 @@ Yaohui Zeng <yaohui-zeng@uiowa.edu>
 
 \seealso{
 \code{\link{grpregOverlap}}, \code{\link{overlapMatrix}}
-}
-
-\author{
-Yaohui Zeng <yaohui-zeng@uiowa.edu>
 }
 
 \examples{
