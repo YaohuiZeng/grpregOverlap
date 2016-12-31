@@ -1,0 +1,12 @@
+citHeader("To cite grpregOverlap in publications use:")
+
+citEntry(
+  entry="Article",
+  author = personList(as.person("Yaohui Zeng"),as.person("Patrick Breheny")),
+  title = "Overlapping Group Logistic Regression with Applications to Genetic Pathway Selection",
+  journal = "Cancer Informatics",
+  year = "2016",
+  volume = "15",
+  pages = "179–187",
+  number = "1",
+  textVersion = "Zeng, Y., and Breheny, P. (2016). Overlapping Group Logistic Regression with Applications to Genetic Pathway Selection. Cancer Informatics, 15, 179–187.")
