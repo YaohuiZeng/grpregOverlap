@@ -14,7 +14,7 @@ for grouped variable selection involving overlaps between groups.
 
 ## News:
 * this package now works for survival analysis (Cox model) by specifying "family = cox". 
-* this package on GitHub has been updated to Version 2.1-1. See details in NEWS.
+* this package on GitHub has been updated to Version 2.2-0. See details in NEWS.
 
 ## Installation:
 * the stable version: `install.packages("grpregOverlap")`
