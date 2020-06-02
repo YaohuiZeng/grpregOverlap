@@ -19,7 +19,6 @@ grpregOverlap(X, y, group,
     lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05}, alpha=1, eps=.001, 
     max.iter=1000, dfmax=ncol(X), gmax=length(group), 
     gamma=ifelse(penalty == "grSCAD", 4, 3), tau=1/3, 
-    group.multiplier, 
     returnX = FALSE, returnOverlap = FALSE,
     warn=TRUE, ...) 
 }
@@ -94,14 +93,6 @@ grpregOverlap(X, y, group,
   \item{tau}{
   Tuning parameter for the group exponential lasso; defaults to 1/3.
   }
-  \item{group.multiplier}{
-  A vector of values representing multiplicative factors by which each group's 
-  penalty is to be multiplied. Often, this is a function (such as the square root) 
-  of the number of predictors in each group. If this is not specified by the user,
-  the internal code will, by default, use the square root of group size for the 
-  group selection methods, and a vector of 1's (i.e., no adjustment for group size) 
-  for bi-level selection.
-  }
   \item{returnX}{
   Return the new expanded design matrix? Default is FALSE. Note the storage size 
   of this new matrix can be very large.
@@ -117,7 +108,7 @@ grpregOverlap(X, y, group,
   See \code{\link[grpreg]{grpreg}} for more details.
   }
   \item{...}{
-  Not used currently. 
+  Used to pass options (e.g., `group.multiplier`) to \code{\link[grpreg]{grpreg}}.
   }
 }
 

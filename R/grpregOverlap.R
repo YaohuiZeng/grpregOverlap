@@ -10,7 +10,6 @@ grpregOverlap <- function(X, y, group,
                           alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
                           gmax=length(group), 
                           gamma=ifelse(penalty=="grSCAD", 4, 3), tau=1/3, 
-                          group.multiplier, 
                           returnX = FALSE, returnOverlap = FALSE,
                           warn=TRUE, ...) {
 
@@ -34,26 +33,6 @@ grpregOverlap <- function(X, y, group,
     cat("      Now conducting non-overlapping group selection ...")
   }
   
-  ## Improvement 1 (9/17/2015): Handle situation where variables listed in groups NOT IN X !
-  ## This case is possible in pathway selection, where not all genes in some pathways have expression data recorded. 
-  ## The exsiting code can already handle this in the sense that those genes not in X 
-  ## will not be included the expanded design matrix, except that the group.multiplier vector
-  ## needs to be updated with the actual group size (i.e., the size after removing those non-exsiting genes), which can be done using "over.mat".
-  
-  ## Improvement 2 (3/7/2016): Handle cases where variables in X don't match at 
-  ##    all variables in a group, i.e., cases where diag(over.mat) has zero cells.
-  gs <- diag(over.mat)
-  gs <- gs[gs != 0]  
-  
-  penalty <- match.arg(penalty)
-  if (missing(group.multiplier)) {
-    if (strtrim(penalty,2)=="gr") {
-      group.multiplier <- sqrt(gs)
-    } else {
-      group.multiplier <- rep(1, length(group))
-    }
-  }
-  
   family <- match.arg(family)
   if (family != 'cox') {
     fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
@@ -61,7 +40,7 @@ grpregOverlap <- function(X, y, group,
                   lambda.min=lambda.min, alpha=alpha, eps=eps, 
                   max.iter=max.iter, dfmax=dfmax, 
                   gmax=gmax, gamma=gamma, tau=tau, 
-                  group.multiplier=group.multiplier, warn=warn, ...)
+                  warn=warn, ...)
   } else {
     ## survival analysis
     fit <- grpsurv(X = X.latent, y = y, group = grp.vec, penalty = penalty,
@@ -69,7 +48,7 @@ grpregOverlap <- function(X, y, group,
                    lambda = lambda, 
                    lambda.min = lambda.min, eps = eps, max.iter = max.iter, 
                    dfmax=dfmax, gmax=gmax, tau=tau, 
-                   group.multiplier=group.multiplier, warn=warn, ...)
+                   warn=warn, ...)
   }
  
   fit$beta.latent <- fit$beta # fit$beta from grpreg is latent beta
