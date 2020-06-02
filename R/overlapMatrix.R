@@ -29,7 +29,7 @@ incidenceMatrix <- function(X, group) {
     names(group) <- paste("grp", 1:J, sep="")
   }
   
-  if (class(group[[1]]) == 'numeric') {
+  if (is.numeric(group[[1]])) {
     for (i in 1:J) {
       ind <- group[[i]]
       grp.mat[i, ind] <- 1
