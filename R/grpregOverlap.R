@@ -2,16 +2,10 @@
 ## update (6/21/2016): adapt for cox model
 # ------------------------------------------------------------------------------
 grpregOverlap <- function(X, y, group, 
-                          penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
-                                    "cMCP", "gLasso", "gMCP"), 
                           family=c("gaussian","binomial", "poisson", 'cox'), 
-                          nlambda=100, lambda, 
-                          lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},
-                          alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
-                          gmax=length(group), 
-                          gamma=ifelse(penalty=="grSCAD", 4, 3), tau=1/3, 
-                          returnX = FALSE, returnOverlap = FALSE,
-                          warn=TRUE, ...) {
+                          returnX = FALSE,
+                          returnOverlap = FALSE,
+                          ...) {
 
   # Error checking
   if (class(X) != "matrix") {
@@ -35,20 +29,10 @@ grpregOverlap <- function(X, y, group,
   
   family <- match.arg(family)
   if (family != 'cox') {
-    fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
-                  family=family, nlambda=nlambda, lambda=lambda, 
-                  lambda.min=lambda.min, alpha=alpha, eps=eps, 
-                  max.iter=max.iter, dfmax=dfmax, 
-                  gmax=gmax, gamma=gamma, tau=tau, 
-                  warn=warn, ...)
+    fit <- grpreg(X = X.latent, y = y, group = grp.vec, family = family, ...)
   } else {
     ## survival analysis
-    fit <- grpsurv(X = X.latent, y = y, group = grp.vec, penalty = penalty,
-                   gamma = gamma, alpha = alpha, nlambda = nlambda, 
-                   lambda = lambda, 
-                   lambda.min = lambda.min, eps = eps, max.iter = max.iter, 
-                   dfmax=dfmax, gmax=gmax, tau=tau, 
-                   warn=warn, ...)
+    fit <- grpsurv(X = X.latent, y = y, group = grp.vec, ...)
   }
  
   fit$beta.latent <- fit$beta # fit$beta from grpreg is latent beta

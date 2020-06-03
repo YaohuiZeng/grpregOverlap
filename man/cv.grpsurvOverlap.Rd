@@ -9,8 +9,7 @@ Cross-validation for choosing regularization parameter lambda for Cox models.
 Performs k-fold cross validation for penalized regression models with overlapping grouped covariates over a grid of values for the regularization parameter lambda.
 }
 \usage{
-cv.grpsurvOverlap(X, y, group, ..., nfolds = 10, seed, cv.ind, 
-                  returnY = FALSE, trace = FALSE)
+cv.grpsurvOverlap(X, y, group, ...)
 }
 
 \arguments{
@@ -18,18 +17,7 @@ cv.grpsurvOverlap(X, y, group, ..., nfolds = 10, seed, cv.ind,
   \item{y}{The time-to-event outcome matrix for survival analysis, as explained in \code{grpregOverlap}.}
   \item{group}{A list of vectors containing group information, as in \code{grpregOverlap}.}
   \item{\dots}{
-Additional arguments to \code{grpregOverlap}.}
-  \item{nfolds}{
-The number of cross-validation folds.  Default is 10.
-}
-  \item{seed}{
-Set the seed of the random number generator to obtain reproducible results.  
-}
-  \item{cv.ind}{User specified indices of which fold each observation belongs to. By default the observations are randomly assigned.}
-  \item{returnY}{Should the linear predictors from the cross-validation folds be returned?  Default is FALSE; if TRUE, this will return a matrix in which the element for row i, column j is the fitted value for observation i from the fold in which observation i was excluded from the fit, at the jth value of lambda. See details in \code{\link[grpreg]{cv.grpsurv}}}
-  \item{trace}{
-If set to TRUE, print out the progress of the cross-validation. Default is FALSE.
-  }
+Additional arguments to either \code{grpregOverlap} or \code{\link[grpreg]{cv.grpsurv}}}
 }
 
 \details{
