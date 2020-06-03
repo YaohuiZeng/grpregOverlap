@@ -8,25 +8,23 @@ data(pathway.dat)
 test_that("group argument, a list?", {
   X <- as.matrix(birthwt.grpreg[,-1:-2])
   group <- c(1,1,1,2,2,2,3,3,4,5,5,6,7,8,8,8)
-  expect_that(overlapMatrix(X, group), 
-              throws_error("Argument 'group' must be a list"))
+  expect_error(overlapMatrix(X, group), 
+              "Argument 'group' must be a list")
   
   group <- list(c(1, 2, 3), c(4, 5, 6), c(7, 8), c(9), c(10, 11), 
                  c(12), c(13), c(14, 15, 16))
-  expect_that(overlapMatrix(X, group), 
-              not(throws_error("Argument 'group' must be a list")))
+  expect_error(overlapMatrix(X, group), NA)
   
   group <- lapply(group, function(x) colnames(X)[x])
-  expect_that(overlapMatrix(X, group), 
-              not(throws_error("Argument 'group' must be a list")))
+  expect_error(overlapMatrix(X, group), NA)
 })
 
 test_that('group information, correct?', {
   X <- as.matrix(birthwt.grpreg[,-1:-2])
   group <- list(c('a', 'b', 'c'), c('d', 'e', 'f'), c('g', 'h'), c('i'), 
                 c('j', 'k'), c('l'), c('m'), c('n', 'o', 'p'))
-  expect_that(overlapMatrix(X, group), 
-              throws_error("The names of variables in X don't match with names in group!"))
+  expect_error(overlapMatrix(X, group), 
+              "The names of variables in X don't match with names in group!")
   
   group <- list(c(1, 2, 3, 7), c(4, 5, 6), c(7, 8, 10), c(7, 10, 11), c(6, 14, 15, 16))
   ## create new groups for variables 9, 12, 13, put them at bottom
