@@ -10,6 +10,12 @@ overlapping grouped covariates based on the latent group lasso approach
 (Jacob et al., 2009; Obozinski et al., 2011). Latent group MCP/SCAD as well as 
 bi-level selection methods, namely the group exponential lasso (Breheny, 2015) 
 and the composite MCP (Huang et al., 2012) are also available.
+
+This function is a useful wrapper to the \code{grpreg} package's
+\code{grpreg} and \code{grpsurv} (depending on the \code{family})
+functions. Arguments can be passed through to these functions using
+\code{...}, see \code{\link[grpreg]{grpreg}} and
+\code{\link[grpreg]{grpsurv}} for usage and more details.
 }
 
 \usage{
@@ -50,7 +56,10 @@ grpregOverlap(X, y, group,
   variables in group i.
   }
   \item{...}{
-  Used to pass options (e.g., `group.multiplier`) to \code{\link[grpreg]{grpreg}}.
+  Used to pass options (e.g., `group.multiplier`) to
+  \code{\link[grpreg]{grpreg}}. Note: the \code{returnX} argument will
+  not be passed through, since this will cause \code{grpregOverlap} to
+  store X.latent in the fitted model object.
   }
 }
 
