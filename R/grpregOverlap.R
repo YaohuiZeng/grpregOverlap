@@ -8,7 +8,7 @@ grpregOverlap <- function(X, y, group,
                           ...) {
 
   # Error checking
-  if (class(X) != "matrix") {
+  if (is.matrix(X)) {
     tmp <- try(X <- as.matrix(X), silent=TRUE)
     if (class(tmp)[1] == "try-error")  {
       stop("X must be a matrix or able to be coerced to a matrix")
