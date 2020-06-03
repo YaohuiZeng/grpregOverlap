@@ -7,7 +7,7 @@ predict.grpregOverlap <- function(object, X,
                                    latent = FALSE, lambda, 
                                    which=1:length(object$lambda), ...) {
   family <- object$family
-  if (!missing(X) && class(X)=="character") {
+  if (!missing(X) && is.character(X)) {
     type <- X
     X <- NULL
   }
@@ -29,7 +29,7 @@ predict.grpregOverlap <- function(object, X,
       } else {
         v <- drop(apply(beta != 0, 2, FUN=which))
       }
-      if (class(v)=="list") {
+      if (is.list(v)) {
         res <- sapply(v, length)
       } else {
         res <- length(v)
