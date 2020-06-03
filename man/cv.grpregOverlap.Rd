@@ -9,7 +9,7 @@ Cross-validation for choosing regularization parameter lambda
 Performs k-fold cross validation for penalized regression models with overlapping grouped covariates over a grid of values for the regularization parameter lambda.
 }
 \usage{
-cv.grpregOverlap(X, y, group, ..., nfolds = 10, seed, trace = FALSE)
+cv.grpregOverlap(X, y, group, ...)
 }
 
 \arguments{
@@ -17,16 +17,7 @@ cv.grpregOverlap(X, y, group, ..., nfolds = 10, seed, trace = FALSE)
   \item{y}{The response vector (or matrix), as in \code{grpregOverlap}.}
   \item{group}{A list of vectors containing group information, as in \code{grpregOverlap}.}
   \item{\dots}{
-Additional arguments to \code{grpregOverlap}.}
-  \item{nfolds}{
-The number of cross-validation folds.  Default is 10.
-}
-  \item{seed}{
-Set the seed of the random number generator to obtain reproducible results.  
-}
-  \item{trace}{
-If set to TRUE, print out the progress of the cross-validation. Default is FALSE.
-  }
+Additional arguments to either \code{grpregOverlap} or \code{\link[grpreg]{cv.grpreg}}}
 }
 
 \details{
