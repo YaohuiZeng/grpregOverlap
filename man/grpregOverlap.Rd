@@ -21,7 +21,7 @@ functions. Arguments can be passed through to these functions using
 \usage{
 grpregOverlap(X, y, group, 
     family=c("gaussian","binomial", "poisson", "cox"),
-    returnX = FALSE, returnOverlap = FALSE, ...)
+    returnX.latent = FALSE, returnOverlap = FALSE, ...)
 }
 
 \arguments{
@@ -45,9 +45,12 @@ grpregOverlap(X, y, group,
   Either "gaussian", "binomial", or 'cox', depending on the response. If 
   \code{family} is missing, it is set to be 'gaussian'. Specify \code{family} = 'cox' for survival analysis (Cox models).
   }
-  \item{returnX}{
+  \item{returnX.latent}{
   Return the new expanded design matrix? Default is FALSE. Note the storage size 
-  of this new matrix can be very large.
+  of this new matrix can be very large. Note: the name of this argument
+  was recently changed so that returnX can be passed through to
+  \code{\link[grpreg]{grpreg}} (in which case it will return the
+  group-orthonormalized design.
   }
   \item{returnOverlap}{
   Return the matrix containing overlapps? Default is FALSE. It is a square matrix
@@ -76,7 +79,7 @@ For technical details, see (Jacob et al., 2009) and (Obozinski et al., 2011).
 in \code{grpreg}, the interface for group bridge-penalized method is not implemented.
 
 The expanded design matrix is named \code{X.latent}. It is a returned value in the fitted
-object, provided \code{returnX} is TRUE. The latent coeffecient (or norm) vector then 
+object, provided \code{returnX.latent} is TRUE. The latent coeffecient (or norm) vector then 
 corresponds to that. Note thaT when constructing \code{X.latent}, the columns in \code{X} 
 corresponding to those variables not included in \code{group} will be removed automatically.
 
@@ -133,7 +136,7 @@ with following variables.
   \item{X.latent}{
   The new expanded design matrix for the latent group lasso formulation. The
   variables are reordered according to the order of groups. Only returned if
-  \code{returnX} is TRUE.
+  \code{returnX.latent} is TRUE.
   }
   \item{W}{Matrix of \code{exp(beta)} values for each subject over all
     \code{lambda} values. (For Cox models only)}

@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 grpregOverlap <- function(X, y, group, 
                           family=c("gaussian","binomial", "poisson", 'cox'), 
-                          returnX = FALSE,
+                          returnX.latent = FALSE,
                           returnOverlap = FALSE,
                           ...) {
 
@@ -41,7 +41,7 @@ grpregOverlap <- function(X, y, group,
   fit$group <- group
   fit$grp.vec <- grp.vec # this is 'group' argument in Package 'grpreg'
   fit$family <- family
-  if (returnX) {
+  if (returnX.latent) {
     fit$X.latent <- X.latent
   } 
   if (returnOverlap) {
