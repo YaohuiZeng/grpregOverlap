@@ -10,18 +10,18 @@ overlapping grouped covariates based on the latent group lasso approach
 (Jacob et al., 2009; Obozinski et al., 2011). Latent group MCP/SCAD as well as 
 bi-level selection methods, namely the group exponential lasso (Breheny, 2015) 
 and the composite MCP (Huang et al., 2012) are also available.
+
+This function is a useful wrapper to the \code{grpreg} package's
+\code{grpreg} and \code{grpsurv} (depending on the \code{family})
+functions. Arguments can be passed through to these functions using
+\code{...}, see \code{\link[grpreg]{grpreg}} and
+\code{\link[grpreg]{grpsurv}} for usage and more details.
 }
 
 \usage{
 grpregOverlap(X, y, group, 
-    penalty=c("grLasso", "grMCP", "grSCAD", "gel", "cMCP", "gLasso", "gMCP"), 
-    family=c("gaussian","binomial", "poisson", "cox"), nlambda=100, lambda, 
-    lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05}, alpha=1, eps=.001, 
-    max.iter=1000, dfmax=ncol(X), gmax=length(group), 
-    gamma=ifelse(penalty == "grSCAD", 4, 3), tau=1/3, 
-    group.multiplier, 
-    returnX = FALSE, returnOverlap = FALSE,
-    warn=TRUE, ...) 
+    family=c("gaussian","binomial", "poisson", "cox"),
+    returnX.latent = FALSE, returnOverlap = FALSE, ...)
 }
 
 \arguments{
@@ -41,70 +41,16 @@ grpregOverlap(X, y, group,
   each containing integer indices or  character names of variables in the group. 
   variables that not belong to any groups will be disgarded.
   }
-  \item{penalty}{
-  The penalty to be applied to the model.  Specify \code{grLasso}, \code{grMCP}, or
-  \code{grSCAD} for group selection. Or specify \code{gel} or \code{cMCP} for 
-  bi-level selection, i.e., selecting important groups as well as important 
-  variables in those groups. See \code{\link[grpreg]{grpreg}} for more details.
-  }
   \item{family}{
   Either "gaussian", "binomial", or 'cox', depending on the response. If 
   \code{family} is missing, it is set to be 'gaussian'. Specify \code{family} = 'cox' for survival analysis (Cox models).
   }
-  \item{nlambda}{
-  The number of \code{lambda} values. Default is 100.
-  }
-  \item{lambda}{
-  A user supplied sequence of \code{lambda} values. Typically, this is left 
-  unspecified, and the function automatically computes a grid of lambda values 
-  that ranges uniformly on the log scale over the relevant range of lambda values.
-  }
-  \item{lambda.min}{
-  The smallest value for \code{lambda}, as a fraction of \code{lambda.max}.
-  Default is .0001 if the number of observations is larger than the number of 
-  covariates and .05 otherwise.
-  } 
-  \item{alpha}{
-  Adopted from \code{grpreg}, the L2 (ridge) penalty is also allowed along with 
-  the group penalty. \code{alpha} controls the proportional weight of the 
-  regularization parameters of these two penalties. The regularization parameter 
-  of the group penalty is \code{lambda*alpha}, while that of the ridge penalty is
-  \code{lambda*(1-alpha)}. Default is 1: no L2 penalty.
-  }
-  \item{eps}{Convergence threshhold.  The algorithm iterates until the change (on 
-  the standardized scale) in any coefficient is less than \code{eps}. Default is \code{.001}.
-  }
-  \item{max.iter}{
-  The maximum number of iterations. Default is 1000. See \code{\link[grpreg]{grpreg}} 
-  for more details.
-  }
-  \item{dfmax}{
-  Limit on the number of parameters allowed to be nonzero. If this limit 
-  is exceeded, the algorithm will exit early from the regularization path.
-  Default is the total number of covariates.
-  }
-  \item{gmax}{
-  Limit on the number of groups allowed to have nonzero elements. If this limit 
-  is exceeded, the algorithm will exit early from the regularization path.
-  Default is the total number of groups.
-  }
-  \item{gamma}{
-  Tuning parameter of the MCP penalty; defaults to 3.
-  }
-  \item{tau}{
-  Tuning parameter for the group exponential lasso; defaults to 1/3.
-  }
-  \item{group.multiplier}{
-  A vector of values representing multiplicative factors by which each group's 
-  penalty is to be multiplied. Often, this is a function (such as the square root) 
-  of the number of predictors in each group. If this is not specified by the user,
-  the internal code will, by default, use the square root of group size for the 
-  group selection methods, and a vector of 1's (i.e., no adjustment for group size) 
-  for bi-level selection.
-  }
-  \item{returnX}{
+  \item{returnX.latent}{
   Return the new expanded design matrix? Default is FALSE. Note the storage size 
-  of this new matrix can be very large.
+  of this new matrix can be very large. Note: the name of this argument
+  was recently changed so that returnX can be passed through to
+  \code{\link[grpreg]{grpreg}} (in which case it will return the
+  group-orthonormalized design.
   }
   \item{returnOverlap}{
   Return the matrix containing overlapps? Default is FALSE. It is a square matrix
@@ -112,12 +58,11 @@ grpregOverlap(X, y, group,
   group i and j. Diagonal value \eqn{C[i, i]} is therefore the number of 
   variables in group i.
   }
-  \item{warn}{
-  Should the function give a warning if it fails to converge?  Default is TRUE.  
-  See \code{\link[grpreg]{grpreg}} for more details.
-  }
   \item{...}{
-  Not used currently. 
+  Used to pass options (e.g., `group.multiplier`) to
+  \code{\link[grpreg]{grpreg}}. Note: the \code{returnX} argument will
+  not be passed through, since this will cause \code{grpregOverlap} to
+  store X.latent in the fitted model object.
   }
 }
 
@@ -134,7 +79,7 @@ For technical details, see (Jacob et al., 2009) and (Obozinski et al., 2011).
 in \code{grpreg}, the interface for group bridge-penalized method is not implemented.
 
 The expanded design matrix is named \code{X.latent}. It is a returned value in the fitted
-object, provided \code{returnX} is TRUE. The latent coeffecient (or norm) vector then 
+object, provided \code{returnX.latent} is TRUE. The latent coeffecient (or norm) vector then 
 corresponds to that. Note thaT when constructing \code{X.latent}, the columns in \code{X} 
 corresponding to those variables not included in \code{group} will be removed automatically.
 
@@ -191,7 +136,7 @@ with following variables.
   \item{X.latent}{
   The new expanded design matrix for the latent group lasso formulation. The
   variables are reordered according to the order of groups. Only returned if
-  \code{returnX} is TRUE.
+  \code{returnX.latent} is TRUE.
   }
   \item{W}{Matrix of \code{exp(beta)} values for each subject over all
     \code{lambda} values. (For Cox models only)}

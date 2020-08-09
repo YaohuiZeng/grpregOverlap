@@ -2,20 +2,13 @@
 ## update (6/21/2016): adapt for cox model
 # ------------------------------------------------------------------------------
 grpregOverlap <- function(X, y, group, 
-                          penalty=c("grLasso", "grMCP", "grSCAD", "gel", 
-                                    "cMCP", "gLasso", "gMCP"), 
                           family=c("gaussian","binomial", "poisson", 'cox'), 
-                          nlambda=100, lambda, 
-                          lambda.min={if (nrow(X) > ncol(X)) 1e-4 else .05},
-                          alpha=1, eps=.001, max.iter=1000, dfmax=ncol(X), 
-                          gmax=length(group), 
-                          gamma=ifelse(penalty=="grSCAD", 4, 3), tau=1/3, 
-                          group.multiplier, 
-                          returnX = FALSE, returnOverlap = FALSE,
-                          warn=TRUE, ...) {
+                          returnX.latent = FALSE,
+                          returnOverlap = FALSE,
+                          ...) {
 
   # Error checking
-  if (class(X) != "matrix") {
+  if (is.matrix(X)) {
     tmp <- try(X <- as.matrix(X), silent=TRUE)
     if (class(tmp)[1] == "try-error")  {
       stop("X must be a matrix or able to be coerced to a matrix")
@@ -34,42 +27,12 @@ grpregOverlap <- function(X, y, group,
     cat("      Now conducting non-overlapping group selection ...")
   }
   
-  ## Improvement 1 (9/17/2015): Handle situation where variables listed in groups NOT IN X !
-  ## This case is possible in pathway selection, where not all genes in some pathways have expression data recorded. 
-  ## The exsiting code can already handle this in the sense that those genes not in X 
-  ## will not be included the expanded design matrix, except that the group.multiplier vector
-  ## needs to be updated with the actual group size (i.e., the size after removing those non-exsiting genes), which can be done using "over.mat".
-  
-  ## Improvement 2 (3/7/2016): Handle cases where variables in X don't match at 
-  ##    all variables in a group, i.e., cases where diag(over.mat) has zero cells.
-  gs <- diag(over.mat)
-  gs <- gs[gs != 0]  
-  
-  penalty <- match.arg(penalty)
-  if (missing(group.multiplier)) {
-    if (strtrim(penalty,2)=="gr") {
-      group.multiplier <- sqrt(gs)
-    } else {
-      group.multiplier <- rep(1, length(group))
-    }
-  }
-  
   family <- match.arg(family)
   if (family != 'cox') {
-    fit <- grpreg(X = X.latent, y = y, group = grp.vec, penalty=penalty,
-                  family=family, nlambda=nlambda, lambda=lambda, 
-                  lambda.min=lambda.min, alpha=alpha, eps=eps, 
-                  max.iter=max.iter, dfmax=dfmax, 
-                  gmax=gmax, gamma=gamma, tau=tau, 
-                  group.multiplier=group.multiplier, warn=warn, ...)
+    fit <- grpreg(X = X.latent, y = y, group = grp.vec, family = family, ...)
   } else {
     ## survival analysis
-    fit <- grpsurv(X = X.latent, y = y, group = grp.vec, penalty = penalty,
-                   gamma = gamma, alpha = alpha, nlambda = nlambda, 
-                   lambda = lambda, 
-                   lambda.min = lambda.min, eps = eps, max.iter = max.iter, 
-                   dfmax=dfmax, gmax=gmax, tau=tau, 
-                   group.multiplier=group.multiplier, warn=warn, ...)
+    fit <- grpsurv(X = X.latent, y = y, group = grp.vec, ...)
   }
  
   fit$beta.latent <- fit$beta # fit$beta from grpreg is latent beta
@@ -78,7 +41,7 @@ grpregOverlap <- function(X, y, group,
   fit$group <- group
   fit$grp.vec <- grp.vec # this is 'group' argument in Package 'grpreg'
   fit$family <- family
-  if (returnX) {
+  if (returnX.latent) {
     fit$X.latent <- X.latent
   } 
   if (returnOverlap) {

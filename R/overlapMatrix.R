@@ -15,7 +15,7 @@ overlapMatrix <- function(X, group) {
 incidenceMatrix <- function(X, group) {
   n <- nrow(X)
   p <- ncol(X)
-  if (class(group) != 'list') {
+  if (! is.list(group)) {
     stop("Argument 'group' must be a list of integer indices or character names of variables!")
   }
   J <- length(group)
@@ -29,7 +29,7 @@ incidenceMatrix <- function(X, group) {
     names(group) <- paste("grp", 1:J, sep="")
   }
   
-  if (class(group[[1]]) == 'numeric') {
+  if (is.numeric(group[[1]])) {
     for (i in 1:J) {
       ind <- group[[i]]
       grp.mat[i, ind] <- 1
