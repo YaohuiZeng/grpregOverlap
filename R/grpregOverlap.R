@@ -96,8 +96,8 @@ gamma2beta<- function(gamma, incidence.mat, grp.vec, family) {
 # -------------------------------------------------------------------------------
 expandX <- function(X, group) {
   incidence.mat <- incidenceMatrix(X, group) # group membership incidence matrix
-  over.mat <- Matrix(incidence.mat %*% t(incidence.mat), sparse = TRUE, 
-                     dimnames = dimnames(incidence.mat)) # overlap matrix
+  over.mat <- Matrix(incidence.mat %*% t(incidence.mat), sparse = TRUE) 
+                     #dimnames = dimnames(incidence.mat)) # overlap matrix
   grp.vec <- rep(1:nrow(over.mat), times = diag(over.mat)) # group index vector
   
   # expand X to X.latent
